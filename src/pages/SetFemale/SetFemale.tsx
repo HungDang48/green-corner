@@ -1,123 +1,69 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 import Banner from '../../components/Banner/Banner'
+import './SetFemale.css'
+import axios from 'axios'
 
-const SetFemale = () => {
-  return (
-    <div>
-         <Header />
-            <div className="header-low">
-                SET NỮ ĐANG HOT
-            </div>
-            <body>
-                
-            <div className="product-grid">
-                    <div className="product">
-                        <img alt="Gray cardigan with white stripes" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-giu-nhiet-nu-yody-ATN7007-DEN%20(13).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.269
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
+export interface Product {
+    id: string;
+    name: string;
+    createdAt: number;
+    updatedAt: number;
+    categoryId: number;
+    gendersID: number;
+    size: string;
+    color: string;
+    price: number;
+    image: string;
+}
+const SetFemale: React.FC = () => {
+    const [products, setProducts] = useState<Product[] | null>(null); // Dữ liệu là mảng các đối tượng Product hoặc null
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<Error | null>(null);
 
-                    <div className="product">
-                        <img alt="Person wearing a beige cardigan" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-thun-thu-dong-nu-ATN7026-XCV%20(1).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.268
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
-                    <div className="product">
-                        <img alt="Navy blue cardigan with white stripes" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-giu-nhiet-nu-ATN7019-CAM%20%20(1).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.267
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
-                    <div className="product">
-                        <img alt="Gray cardigan with white stripes at the bottom" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-thun-thu-dong-nu-ATN7026-XCV%20(1).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.266
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
-                    <div className="product">
-                        <img alt="Gray cardigan with white stripes at the bottom" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-thun-thu-dong-nu-ATN7026-XCV%20(1).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.266
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get<Product[]>('http://localhost:5000/products');
+                const filteredProducts = response.data.filter(product => product.gendersID === 3);
+                setProducts(filteredProducts);  // Cập nhật state với các sản phẩm có categoryId = 7
+            } catch (error) {
+                setError(error as Error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
+        fetchProducts();
+    }, []);
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+    return (
+        <div>
+        <Header />
+        <Banner />
+        <div className="header-low">
+            SET NỮ ĐANG HOT
+        </div>
+        <div className="product-grid">
+            {products && products.map((product) => (
+                <div className="product" key={product.id}>
+                    <img alt={product.name} height="400" src={product.image} width="300" />
+                    <div className="product-title">
+                        {product.name}
+                    </div>
+                    <div className="product-price">
+                        {product.price} VND
+                    </div>
                 </div>
-                <div className="product-grid">
-                    <div className="product">
-                        <img alt="Gray cardigan with white stripes" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-giu-nhiet-nu-yody-ATN7007-DEN%20(13).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.269
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
-
-                    <div className="product">
-                        <img alt="Person wearing a beige cardigan" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-thun-thu-dong-nu-ATN7026-XCV%20(1).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.268
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
-                    <div className="product">
-                        <img alt="Navy blue cardigan with white stripes" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-giu-nhiet-nu-ATN7019-CAM%20%20(1).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.267
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
-                    <div className="product">
-                        <img alt="Gray cardigan with white stripes at the bottom" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-thun-thu-dong-nu-ATN7026-XCV%20(1).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.266
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
-                    <div className="product">
-                        <img alt="Gray cardigan with white stripes at the bottom" height="400" src="https://m.yodycdn.com/fit-in/filters:format(webp)/products/ao-thun-thu-dong-nu-ATN7026-XCV%20(1).jpg" width="300" />
-                        <div className="product-title">
-                            Áo Len Cardigan ALD.266
-                        </div>
-                        <div className="product-price">
-                            799,000₫
-                        </div>
-                    </div>
-
-
-                </div>
-                
-            </body>
-
-            <Footer />
+            ))}
+        </div>
+        <Footer />
     </div>
-  )
+    )
 }
 
 export default SetFemale

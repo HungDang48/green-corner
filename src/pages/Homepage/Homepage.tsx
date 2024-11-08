@@ -11,6 +11,7 @@ import CardProduct from '../../modules/home/components/CardProduct';
 import ProductDetail from '../productdetail/ProductDetail';
 import Login from '../login/Login';
 import Register from '../register/Register';
+import ExampleComponent from '../ExampleComponent/ExampleComponent';
 
 
 
@@ -20,13 +21,14 @@ const Homepage = () => {
   return (
     <div>
       <Header />
-      {/* <Banner  /> */}
+      <Banner  />
 
       <MaleProduct />
       <FemaleProduct />
       <NewProduct />
       <HotSaleProduct />
       {/* <ProductDetail /> */}
+      {/* <ExampleComponent /> */}
 
      
       <Footer />

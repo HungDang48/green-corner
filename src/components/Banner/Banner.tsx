@@ -4,7 +4,7 @@ import img2 from '../img/img2.jpg';
 import img3 from '../img/img3.jpg';
 
 interface BannerProps {
-  images: string[]; // Array of image paths
+  images?: string[]; // Array of image paths
   interval?: number; // Optional interval in milliseconds
 }
 
@@ -26,7 +26,6 @@ const Banner: React.FC<BannerProps> = ({ images = [img1, img2, img3], interval =
   return (
     <div>
       <img src={images[currentImageIndex]} alt="banner" style={{ width: '100%' }} />
-      {/* Add your next and previous buttons here */}
     </div>
   );
 };
