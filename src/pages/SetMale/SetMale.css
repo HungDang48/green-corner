@@ -47,3 +47,36 @@
     color: #ff6600;
     font-weight: bold;
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+.pagination button {
+    background-color: #333; /* Màu đen */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #555; /* Màu xám đậm khi hover */
+}
+
+.pagination button:disabled {
+    background-color: #aaa; /* Màu xám nhạt khi bị vô hiệu hóa */
+    cursor: not-allowed;
+}
+
+.pagination span {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+}

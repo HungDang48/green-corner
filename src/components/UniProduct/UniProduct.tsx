@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './styleMaleProduct.css';
+import './UniProduct.css';
 import axios from 'axios';
 
 export interface Product {
@@ -15,7 +15,7 @@ export interface Product {
     image: string;
 }
 
-const MaleProduct: React.FC = () => {
+const UniProduct: React.FC = () => {
     const [products, setProducts] = useState<Product[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
@@ -27,7 +27,7 @@ const MaleProduct: React.FC = () => {
             try {
                 setLoading(true);
                 const response = await axios.get<Product[]>('http://localhost:5000/products');
-                const filteredProducts = response.data.filter(product => product.gendersID === 1);
+                const filteredProducts = response.data.filter(product => product.gendersID === 3);
                 setProducts(filteredProducts);
             } catch (error) {
                 setError(error as Error);
@@ -54,18 +54,18 @@ const MaleProduct: React.FC = () => {
                 <body>
                     <div className="nav">
                         <div className="header">
-                            NAM
+                            UNISEX
                             <a href="#">
-                                SƠ MI
+                                T-SHIRT
                             </a>
                             <a href="#">
-                                ÁO VEST
+                                QUẦN TÚI HỘP
                             </a>
                             <a href="#">
-                                POLO
+                                QUẦN KAKI
                             </a>
                             <a href="#">
-                                ÁO NỈ
+                                ÁO KHOÁT
                             </a>
                         </div>
 
@@ -106,4 +106,4 @@ const MaleProduct: React.FC = () => {
     )
 }
 
-export default MaleProduct
+export default UniProduct

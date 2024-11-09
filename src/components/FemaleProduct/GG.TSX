@@ -29,8 +29,8 @@ const FemaleProduct: React.FC = () => {
                 setLoading(true);
                 const response = await axios.get<Product[]>('http://localhost:5000/products');
                 const filteredProducts = response.data.filter(product =>
-                    product.gendersID === 2 && 
-                    (!selectedCategoryId || product.categoryId === selectedCategoryId)
+                    product.gendersID === 2 &&
+                    (selectedCategoryId ? product.categoryId === selectedCategoryId : true)
                 );
                 setProducts(filteredProducts);
             } catch (error) {
@@ -41,7 +41,7 @@ const FemaleProduct: React.FC = () => {
         };
 
         fetchProducts();
-    }, [selectedCategoryId]);
+    }, [selectedCategoryId]); // Theo dõi selectedCategoryId
 
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -50,7 +50,6 @@ const FemaleProduct: React.FC = () => {
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     const handleCategoryClick = (categoryId: number | null) => {
-        console.log("Selected Category ID:", categoryId); // Kiểm tra `categoryId` được chọn
         setSelectedCategoryId(categoryId);
         setCurrentPage(1);
     };
@@ -61,35 +60,51 @@ const FemaleProduct: React.FC = () => {
     return (
         <div>
             <div className="container-product">
-                <body>
                 <div className="nav">
                     <div className="header">
                         Nữ
-                        <a href="#" onClick={() => handleCategoryClick(2)}>SƠ MI</a>
-                        <a href="#" onClick={() => handleCategoryClick(3)}>ÁO VEST</a>
-                        <a href="#" onClick={() => handleCategoryClick(4)}>CROPTOP</a>
-                        <a href="#" onClick={() => handleCategoryClick(5)}>ÁO NỈ</a>
+                        <a href="#" onClick={() => handleCategoryClick(2)}> {/* Thay đổi categoryId cho "SƠ MI" */}
+                            SƠ MI
+                        </a>
+                        <a href="#" onClick={() => handleCategoryClick(3)}>
+                            ÁO VEST
+                        </a>
+                        <a href="#" onClick={() => handleCategoryClick(4)}>
+                            CROPTOP
+                        </a>
+                        <a href="#" onClick={() => handleCategoryClick(5)}>
+                            ÁO NỈ
+                        </a>
                     </div>
                 </div>
                 <div className="product-grid">
                     {currentProducts && currentProducts.map((product) => (
                         <div className="product" key={product.id}>
                             <img alt={product.name} height="400" src={product.image} width="300" />
-                            <div className="product-title">{product.name}</div>
-                            <div className="product-price">{product.price} VND</div>
+                            <div className="product-title">
+                                {product.name}
+                            </div>
+                            <div className="product-price">
+                                {product.price} VND
+                            </div>
                         </div>
                     ))}
                 </div>
                 <div className="pagination">
-                    <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+                    <button
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        Previous
+                    </button>
                     <span> Page {currentPage} </span>
-                    <button onClick={() => paginate(currentPage + 1)}
-                        disabled={!products || currentPage === Math.ceil((products.length || 0) / productsPerPage)}>
+                    <button
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={!products || currentPage === Math.ceil((products.length || 0) / productsPerPage)}
+                    >
                         Next
                     </button>
                 </div>
-                </body>
-                
             </div>
         </div>
     );

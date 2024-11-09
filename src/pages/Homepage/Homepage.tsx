@@ -12,6 +12,7 @@ import ProductDetail from '../productdetail/ProductDetail';
 import Login from '../login/Login';
 import Register from '../register/Register';
 import ExampleComponent from '../ExampleComponent/ExampleComponent';
+import UniProduct from '../../components/UniProduct/UniProduct';
 
 
 
@@ -21,14 +22,15 @@ const Homepage = () => {
   return (
     <div>
       <Header />
-      <Banner  />
+      {/* <Banner  /> */}
 
-      <MaleProduct />
+      {/* <MaleProduct /> */}
       <FemaleProduct />
-      <NewProduct />
-      <HotSaleProduct />
+      {/* <NewProduct />
+      <HotSaleProduct /> */}
       {/* <ProductDetail /> */}
       {/* <ExampleComponent /> */}
+      {/* <UniProduct /> */}
 
      
       <Footer />
