@@ -21,16 +21,16 @@ const Homepage = () => {
 
   return (
     <div>
-      <Header />
-      {/* <Banner  /> */}
+      {/* <Header />
+      <Banner  /> */}
 
-      {/* <MaleProduct /> */}
-      <FemaleProduct />
-      {/* <NewProduct />
-      <HotSaleProduct /> */}
+      {/* <MaleProduct />
+      <FemaleProduct /> */}
+      <NewProduct />
+      <HotSaleProduct />
       {/* <ProductDetail /> */}
       {/* <ExampleComponent /> */}
-      {/* <UniProduct /> */}
+      <UniProduct />
 
      
       <Footer />

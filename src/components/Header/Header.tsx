@@ -54,8 +54,8 @@ const Header = () => {
         <div className="menu">
         <a href="#" onClick={handleHomePageClick}>TRANG CHỦ</a>
           <a href="#" onClick={handleProductDetailClick}>DETAIL</a>
-          <a href="#" onClick={handleSetMaleClick}>SET NAM</a>
-          <a href="#" onClick={handleSetFemaleClick}>SET NỮ</a>
+          <a href="#" onClick={handleSetMaleClick}>NAM</a>
+          <a href="#" onClick={handleSetFemaleClick}>NỮ</a>
         </div>
         <div className="search">
           <input type="text" placeholder="Tìm kiếm sản phẩm..." />
