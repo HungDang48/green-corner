@@ -75,3 +75,105 @@ body {
     color: #fff;
     margin-left: 10px;
 }
+.search {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .search input[type="text"] {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    width: 200px;
+  }
+  
+  .search-icons {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+  }
+  
+  .icon {
+    font-size: 18px;
+    color: #333;
+    margin-right: 15px;
+    cursor: pointer;
+  }
+  
+  .icon:hover {
+    color: #007bff;
+  }
+  
+  .cart-icon, .user-icon {
+    position: relative;
+  }
+  
+  .cart-icon::after, .user-icon::after {
+    content: "0";
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #ff6347;
+    color: white;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 2px 5px;
+  }
+  
+  /* Dropdown menu for user icon */
+  .user-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    min-width: 150px;
+    padding: 10px 0;
+  }
+  
+  .user-icon:hover .user-menu {
+    display: block;
+  }
+  
+  .user-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .user-menu a:hover {
+    background-color: #f4f4f4;
+  }
+  .auth-links {
+    display: flex;
+    flex-direction: column; /* Hiển thị các liên kết theo chiều dọc */
+    gap: 10px; /* Cách đều giữa các liên kết */
+    color: white; /* Màu chữ trắng */
+    font-size: 16px; /* Kích thước font chữ 16px */
+  }
+  
+  .auth-links a {
+    color: white; /* Đảm bảo màu chữ trắng cho các liên kết */
+    text-decoration: none; /* Loại bỏ gạch chân */
+    padding: 5px 0; /* Thêm một chút padding để các liên kết không dính sát nhau */
+  }
+  
+  .auth-links a:hover {
+    color: #ff8c00; /* Màu chữ khi hover (bạn có thể thay đổi màu này) */
+    text-decoration: underline; /* Gạch chân khi hover */
+  }
+  
+  .search-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  

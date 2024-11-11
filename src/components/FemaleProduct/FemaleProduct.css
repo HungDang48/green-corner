@@ -82,6 +82,7 @@ color: rgb(255, 0, 0);
     border-radius: 5px;
     display: inline-block;
     border: 1px solid #ccc;
+    font-size: 20px;
             
 }
 .product img {
@@ -91,9 +92,12 @@ color: rgb(255, 0, 0);
     background-color: #e0e0e0;
 }
 .product-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
     margin-top: 10px;
-    font-size: 14px;
-}
+    text-align: center;
+  }
 .product-price {
     font-size: 18px;
     font-weight: bold;

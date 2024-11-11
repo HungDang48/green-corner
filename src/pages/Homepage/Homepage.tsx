@@ -21,8 +21,8 @@ const Homepage = () => {
 
   return (
     <div>
-      {/* <Header />
-      <Banner  /> */}
+      <Header />
+      <Banner  />
 
       {/* <MaleProduct />
       <FemaleProduct /> */}

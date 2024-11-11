@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './styleMaleProduct.css';
 import axios from 'axios';
+import Header from '../Header/Header';
+import Banner from '../Banner/Banner';
 
 export interface Product {
     id: string;
@@ -49,6 +51,8 @@ const MaleProduct: React.FC = () => {
     if (error) return <p>Error: {error.message}</p>;
     return (
         <div>
+            <Header />
+            <Banner />
             <div className="container-product">
 
                 <body>
@@ -84,14 +88,14 @@ const MaleProduct: React.FC = () => {
                         ))}
                     </div>
                     <div className="pagination">
-                        <button
+                        <button className='BTN-pagination'
                             onClick={() => paginate(currentPage - 1)}
                             disabled={currentPage === 1}
                         >
                             Previous
                         </button>
                         <span> Page {currentPage} </span>
-                        <button
+                        <button className='BTN-pagination'
                             onClick={() => paginate(currentPage + 1)}
                             disabled={!products || currentPage === Math.ceil((products.length || 0) / productsPerPage)}
                         >

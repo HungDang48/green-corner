@@ -84,14 +84,14 @@ const UniProduct: React.FC = () => {
                         ))}
                     </div>
                     <div className="pagination">
-                        <button
+                        <button className='BTN-pagination'
                             onClick={() => paginate(currentPage - 1)}
                             disabled={currentPage === 1}
                         >
                             Previous
                         </button>
                         <span> Page {currentPage} </span>
-                        <button
+                        <button className='BTN-pagination'
                             onClick={() => paginate(currentPage + 1)}
                             disabled={!products || currentPage === Math.ceil((products.length || 0) / productsPerPage)}
                         >
