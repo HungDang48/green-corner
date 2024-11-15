@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Register.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header/Header';
 
 interface User {
   id: number;
@@ -142,7 +143,13 @@ const Register = () => {
 
   return (
     <div>
+      <Header />
+      
       <div className="register-container">
+        <div className="register-container-header">
+        <h2>Đăng ký</h2>
+        </div>
+        <div className="register-container-body">
         <form onSubmit={handleSubmit}>
           <label htmlFor="fullname">Họ và tên:</label>
           <input type="text" id="fullname" name="fullname" required value={formData.fullname} onChange={handleChange} />
@@ -173,6 +180,10 @@ const Register = () => {
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           {successMessage && <p className="success-message">{successMessage}</p>}
         </form>
+        </div>
+        
+     
+        
       </div>
     </div>
   );

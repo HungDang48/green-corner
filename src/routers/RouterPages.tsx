@@ -13,6 +13,7 @@ import SetFemale from '../pages/SetFemale/SetFemale';
 import FemaleProduct from '../components/FemaleProduct/FemaleProduct';
 import MaleProduct from '../components/MaleProduct/MaleProduct';
 import UserAccount from '../pages/UserAccount/UserAccount';
+import Cart from '../pages/Cart/Cart';
 
 
 
@@ -33,6 +34,7 @@ const RouterPages = () => {
     <Route path="/FemaleProduct" element={<FemaleProduct />} />
     <Route path="/MaleProduct" element={<MaleProduct />} />
     <Route path="/UserAccount" element={<UserAccount />} />
+    <Route path="/Cart" element={<Cart />} />
    
    
   </Routes>

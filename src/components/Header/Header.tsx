@@ -38,12 +38,16 @@ const Header = () => {
   const handleUserAccountClick = () => {
     navigate('/UserAccount');
   };
+  
+  const handleCartClick = () => {
+    navigate('/Cart');
+  };
 
   const handleLogoutClick = () => {
     // Đặt lại trạng thái đăng nhập khi người dùng đăng xuất
     localStorage.setItem('isLoggedIn', 'false');
     setIsLoggedIn(false); // Cập nhật lại trạng thái đăng nhập
-    navigate('/Login');
+    navigate('/Homepage');
   };
 
   const handleLoginSuccess = () => {
@@ -82,7 +86,7 @@ const Header = () => {
             <div className="search-icons">
               {isLoggedIn ? (
                 <>
-                  <span className="icon cart-icon">🛒</span>
+                  <span className="icon cart-icon" onClick={handleCartClick}>🛒</span>
                   <span className="icon user-icon">👤
                     <div className="user-menu">
                     <a href="#" onClick={handleUserAccountClick}>thông tin cá nhân</a>

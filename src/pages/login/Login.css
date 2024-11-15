@@ -1,106 +1,129 @@
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Background and container styling */
-  body {
-    background-color: #f9f9f9;
-  }
-  
+/* Điều chỉnh phần Header để nó kéo dài toàn bộ chiều ngang trang */
+.Header {
+  width: 100%;
+  display: block;
+}
+
+/* Tổng thể của container-login */
+.container-login {
+  max-width: 500px;
+  margin: 40px auto; /* Canh giữa và thêm khoảng cách từ trên */
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header bên phải trong container-login */
+.container-right-login {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.app-title {
+  font-size: 2em;
+  color: #333;
+  margin: 0;
+}
+
+/* Container bên trái chứa form */
+.container-left-login {
+  width: 100%;
+}
+
+/* Form đăng nhập */
+.container-left-login form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Nhóm kiểm soát nhập liệu */
+.control-group-login {
+  position: relative;
+}
+
+/* Các trường nhập liệu */
+.login-field-login,
+.login-field {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* Để dành chỗ cho icon */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.login-field-login:focus,
+.login-field:focus {
+  border-color: #ffd700; /* Màu vàng khi focus */
+  outline: none;
+}
+
+/* Icon bên trong trường nhập liệu */
+.login-field-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+}
+
+/* Nút đăng nhập */
+.btn {
+  padding: 12px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #ffd700; /* Màu vàng cho nút đăng nhập */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #e6c200;
+}
+
+/* Thông báo lỗi */
+.error-message {
+  color: #ff4d4d;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Liên kết đăng kí */
+.container-left-login a {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  color: #0066cc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.container-left-login a:hover {
+  color: #004999;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 600px) {
   .container-login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #ffffff;
-    color: #333;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 15px;
   }
-  
-  .container-right-login {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
+
   .app-title {
-    font-size: 32px;
-    font-weight: bold;
-    color: #333;
+    font-size: 1.5em;
   }
-  
-  /* Form container styling */
-  .container-left-login {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #ffffff;
-    border-radius: 10px;
-  }
-  
-  .control-group-login {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  
-  .login-field-login,
-  .login-field {
-    width: 100%;
-    padding: 12px 15px;
-    font-size: 16px;
-    background-color: #f2f2f2;
-    border: 1px solid #ddd;
-    color: #333;
-    border-radius: 5px;
-    outline: none;
-    margin-top: 8px;
-  }
-  
-  .login-field-login::placeholder,
-  .login-field::placeholder {
-    color: #888;
-  }
-  
-  .login-field-login:focus,
-  .login-field:focus {
-    border-color: #bbb;
-  }
-  
-  /* Button styling */
+
   .btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #ffcc00;
-    border: none;
-    color: #333;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    padding: 10px;
+    font-size: 0.9rem;
   }
-  
-  .btn:hover {
-    background-color: #e6b800;
-  }
-  
-  /* Link styling */
-  .login-link {
-    margin-top: 15px;
-    color: #777;
-    font-size: 14px;
-    text-decoration: none;
-  }
-  
-  .login-link:hover {
-    color: #ffcc00;
-  }
-  
+}

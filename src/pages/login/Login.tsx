@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header/Header';
 
 // Định nghĩa interface User
 interface User {
@@ -54,6 +55,7 @@ const Login = () => {
 
   return (
     <div>
+      <Header />
       <div className="container-login">
         <div className="container-right-login">
           <h1 className="app-title">ĐĂNG NHẬP</h1>

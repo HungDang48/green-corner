@@ -10,7 +10,7 @@ const ProductDetail = () => {
       <Header />
       <div className="product-detail">
       <div className="product-image-detail">
-          <img src="https://via.placeholder.com/400" alt="Product Image" />
+          <img src="https://dosi-in.com/file/detailed/400/dosiin-dac-retro-ao-thun-dacretro-rapper-asapmob-phong-cach-hiphop-400459400459.jpg?w=1000&h=1000&fit=fill&fm=webp" alt="Product Image" />
         </div>
         <div className="product-info-detail">
           <h1 className="product-name-detail">Tên Sản Phẩm</h1>
