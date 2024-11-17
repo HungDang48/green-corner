@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import Modal from '../../component/modal';
+import HeaderAdmin from '../../component/headerAdmin/HeaderAdmin';
 
 
 export interface User {
@@ -347,167 +348,170 @@ const UserAccount: React.FC = () => {
     };
 
     return (
-        <div className="user-account-container">
-            <div className="user-account-container-top">
-                <h1>DANH SÁCH TÀI KHOẢN</h1>
-                <button className="user-account-button-new-account" onClick={togglePopup}>
-                    Tạo Tài Khoản Mới
-                </button>
+        <div>
+            <HeaderAdmin />
+            <div className="user-account-container">
+                <div className="user-account-container-top">
+                    <h1>DANH SÁCH TÀI KHOẢN</h1>
+                    <button className="user-account-button-new-account" onClick={togglePopup}>
+                        Tạo Tài Khoản Mới
+                    </button>
 
-                <Modal
-                    open={isPopup1Open}
-                    onClose={togglePopup}
-                    style={{
-                        padding: '20px',
-                        backgroundColor: '#f1f1f1',
-                        borderRadius: '10px',
-                        maxWidth: '500px',
-                        width: '100%',
-                    }}
-                >
+                    <Modal
+                        open={isPopup1Open}
+                        onClose={togglePopup}
+                        style={{
+                            padding: '20px',
+                            backgroundColor: '#f1f1f1',
+                            borderRadius: '10px',
+                            maxWidth: '500px',
+                            width: '100%',
+                        }}
+                    >
 
-                    <div className="popup-form-container">
-                        <h2>Tạo tài khoản cho người dùng</h2>
-                        <form className="user-account-account-form" onSubmit={handleSubmit}>
-                            <label>
-                                Họ và Tên:
-                                <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required />
-                            </label>
-                            <label>
-                                Username:
-                                <input type="text" name="username" value={formData.username} onChange={handleInputChange} required />
-                            </label>
-                            <label>
-                                Email:
-                                <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
-                            </label>
-                            <label>
-                                Ngày Sinh:
-                                <input type="date" name="birthDate" value={formData.birthDate} onChange={handleInputChange} required />
-                            </label>
-                            <label>
-                                Giới Tính:
-                                <select name="gender" value={formData.gender} onChange={handleInputChange} required>
-                                    <option value="male">Nam</option>
-                                    <option value="female">Nữ</option>
-                                    <option value="other">Khác</option>
-                                </select>
-                            </label>
-                            <label>
-                                Mật Khẩu:
-                                <input type="password" name="password" value={formData.password} onChange={handleInputChange} required />
-                            </label>
-                            <label>
-                                Xác Nhận Mật Khẩu:
-                                <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
-                            </label>
-                            <div className="popup-buttons">
-                                <button type="submit" className="submit-button">Tạo Tài Khoản</button>
-                                <button type="button" className="cancel-button">Hủy</button>
+                        <div className="popup-form-container">
+                            <h2>Tạo tài khoản cho người dùng</h2>
+                            <form className="user-account-account-form" onSubmit={handleSubmit}>
+                                <label>
+                                    Họ và Tên:
+                                    <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} required />
+                                </label>
+                                <label>
+                                    Username:
+                                    <input type="text" name="username" value={formData.username} onChange={handleInputChange} required />
+                                </label>
+                                <label>
+                                    Email:
+                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
+                                </label>
+                                <label>
+                                    Ngày Sinh:
+                                    <input type="date" name="birthDate" value={formData.birthDate} onChange={handleInputChange} required />
+                                </label>
+                                <label>
+                                    Giới Tính:
+                                    <select name="gender" value={formData.gender} onChange={handleInputChange} required>
+                                        <option value="male">Nam</option>
+                                        <option value="female">Nữ</option>
+                                        <option value="other">Khác</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    Mật Khẩu:
+                                    <input type="password" name="password" value={formData.password} onChange={handleInputChange} required />
+                                </label>
+                                <label>
+                                    Xác Nhận Mật Khẩu:
+                                    <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
+                                </label>
+                                <div className="popup-buttons">
+                                    <button type="submit" className="submit-button">Tạo Tài Khoản</button>
+                                    <button type="button" className="cancel-button">Hủy</button>
 
-                            </div>
-                        </form>
-                    </div>
-                </Modal>
-            </div>
+                                </div>
+                            </form>
+                        </div>
+                    </Modal>
+                </div>
 
-            <div className="user-account-container-bottom">
-                <table className="user-account-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Họ Và Tên</th>
-                            <th>UserName</th>
-                            <th>Email</th>
-                            <th>Birthday</th>
-                            <th>Gender</th>
-                            <th>PassWord</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentUsers.map((user, index) => (
-                            <tr key={user.id}>
-                                <td>{index + 1}</td>
-                                <td>{user.name}</td>
-                                <td>{user.username}</td>
-                                <td>{user.email}</td>
-                                <td>{user.birthday}</td>
-                                <td>{user.gender}</td>
-                                <td>{user.password}</td>
-                                <td>
-                                    <button className="user-account-button-new-account" onClick={() => onUpdate(user.id)} >
-                                        UPDATE
-                                    </button>
-                                    <Modal
-                                        open={isEditPopupOpen}
-                                        onClose={togglePopup1}
-                                        style={{
-                                            padding: '20px',
-                                            backgroundColor: '#f1f1f1',
-                                            borderRadius: '10px',
-                                            maxWidth: '500px',
-                                            width: '100%',
-                                        }}
-
-                                    >
-                                        <div className="popup-form-container">
-                                            <h2>Cập nhật tài khoản người dùng</h2>
-                                            <form className="user-account-account-form" onSubmit={handleSubmitUpdate}>
-                                                <label>
-                                                    Họ và Tên:
-                                                    <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChangeUpdate} required />
-                                                </label>
-                                                <label>
-                                                    Username:
-                                                    <input type="text" name="username" value={formData.username} onChange={handleInputChangeUpdate} required />
-                                                </label>
-                                                <label>
-                                                    Email:
-                                                    <input type="email" name="email" value={formData.email} onChange={handleInputChangeUpdate} required />
-                                                </label>
-                                                <label>
-                                                    Ngày Sinh:
-                                                    <input type="date" name="birthDate" value={formData.birthDate} onChange={handleInputChangeUpdate} required />
-                                                </label>
-                                                <label>
-                                                    Giới Tính:
-                                                    <select name="gender" value={formData.gender} onChange={handleInputChangeUpdate} required>
-                                                        <option value="male">Nam</option>
-                                                        <option value="female">Nữ</option>
-                                                        <option value="other">Khác</option>
-                                                    </select>
-                                                </label>
-                                                <label>
-                                                    Mật Khẩu:
-                                                    <input type="text" name="password" value={formData.password} onChange={handleInputChangeUpdate} required />
-                                                </label>
-                                                <label>
-                                                    Xác Nhận Mật Khẩu:
-                                                    <input type="text" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChangeUpdate} required />
-                                                </label>
-                                                <div className="popup-buttons">
-                                                    <button type="submit" className="submit-button">Cập nhật</button>
-                                                    <button type="button" className="cancel-button" onClick={onCancel}>Hủy</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </Modal>
-                                    <button className="red" onClick={() => handleDelete(user.id)}>
-                                        Xóa Bỏ
-                                    </button>
-                                </td>
+                <div className="user-account-container-bottom">
+                    <table className="user-account-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Họ Và Tên</th>
+                                <th>UserName</th>
+                                <th>Email</th>
+                                <th>Birthday</th>
+                                <th>Gender</th>
+                                <th>PassWord</th>
+                                <th>Action</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {currentUsers.map((user, index) => (
+                                <tr key={user.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{user.name}</td>
+                                    <td>{user.username}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.birthday}</td>
+                                    <td>{user.gender}</td>
+                                    <td>{user.password}</td>
+                                    <td>
+                                        <button className="user-account-button-new-account" onClick={() => onUpdate(user.id)} >
+                                            UPDATE
+                                        </button>
+                                        <Modal
+                                            open={isEditPopupOpen}
+                                            onClose={togglePopup1}
+                                            style={{
+                                                padding: '20px',
+                                                backgroundColor: '#f1f1f1',
+                                                borderRadius: '10px',
+                                                maxWidth: '500px',
+                                                width: '100%',
+                                            }}
+
+                                        >
+                                            <div className="popup-form-container">
+                                                <h2>Cập nhật tài khoản người dùng</h2>
+                                                <form className="user-account-account-form" onSubmit={handleSubmitUpdate}>
+                                                    <label>
+                                                        Họ và Tên:
+                                                        <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChangeUpdate} required />
+                                                    </label>
+                                                    <label>
+                                                        Username:
+                                                        <input type="text" name="username" value={formData.username} onChange={handleInputChangeUpdate} required />
+                                                    </label>
+                                                    <label>
+                                                        Email:
+                                                        <input type="email" name="email" value={formData.email} onChange={handleInputChangeUpdate} required />
+                                                    </label>
+                                                    <label>
+                                                        Ngày Sinh:
+                                                        <input type="date" name="birthDate" value={formData.birthDate} onChange={handleInputChangeUpdate} required />
+                                                    </label>
+                                                    <label>
+                                                        Giới Tính:
+                                                        <select name="gender" value={formData.gender} onChange={handleInputChangeUpdate} required>
+                                                            <option value="male">Nam</option>
+                                                            <option value="female">Nữ</option>
+                                                            <option value="other">Khác</option>
+                                                        </select>
+                                                    </label>
+                                                    <label>
+                                                        Mật Khẩu:
+                                                        <input type="text" name="password" value={formData.password} onChange={handleInputChangeUpdate} required />
+                                                    </label>
+                                                    <label>
+                                                        Xác Nhận Mật Khẩu:
+                                                        <input type="text" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChangeUpdate} required />
+                                                    </label>
+                                                    <div className="popup-buttons">
+                                                        <button type="submit" className="submit-button">Cập nhật</button>
+                                                        <button type="button" className="cancel-button" onClick={onCancel}>Hủy</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </Modal>
+                                        <button className="red" onClick={() => handleDelete(user.id)}>
+                                            Xóa Bỏ
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
 
 
-            </div>
-            <div className="pagination">
-                <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}>Prev</button>
-                <span>{currentPage}</span>
-                <button onClick={() => setCurrentPage(prev => (userList && prev < Math.ceil(userList.length / usersPerPage)) ? prev + 1 : prev)}>Next</button>
+                </div>
+                <div className="pagination">
+                    <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}>Prev</button>
+                    <span>{currentPage}</span>
+                    <button onClick={() => setCurrentPage(prev => (userList && prev < Math.ceil(userList.length / usersPerPage)) ? prev + 1 : prev)}>Next</button>
+                </div>
             </div>
         </div>
 

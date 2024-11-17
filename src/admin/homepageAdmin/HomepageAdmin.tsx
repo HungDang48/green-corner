@@ -3,15 +3,15 @@ import SideBarAdmin from '../component/sidebarAdmin/SideBarAdmin'
 import HeaderAdmin from '../component/headerAdmin/HeaderAdmin'
 
 import FooterAdmin from '../component/footerAdmin/FooterAdmin'
-import UserAccount from '../adminpages/UserAccount/UserAccount'
+import UserAccount from '../adminpages/UserAccount/UserAccountAdmin'
 import ProductAdmin from '../adminpages/ProductAdmin/ProductAdmin'
 
 const HomepageAdmin = () => {
   return (
     <div>
         <HeaderAdmin />
-        <UserAccount />
-        <ProductAdmin />
+        {/* <UserAccount /> */}
+        {/* <ProductAdmin /> */}
         {/* <FooterAdmin /> */}
     </div>
   )

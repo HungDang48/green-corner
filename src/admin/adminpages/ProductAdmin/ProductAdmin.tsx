@@ -2,6 +2,7 @@ import './ProductAdmin.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from '../../component/modal';
+import HeaderAdmin from '../../component/headerAdmin/HeaderAdmin';
 
 // Định nghĩa kiểu dữ liệu cho sản phẩm
 interface Product {
@@ -43,16 +44,16 @@ const ProductAdmin = () => {
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
     const [editUserData, setEditUserData] = useState<Product | null>(null);
     const [formData, setFormData] = useState({
-      productId: '',
-      productname: '',
-      categoriesID: '',
-      gendersID: '',
-      newSaleID: '',
-      hotSaleID: '',
-      size: '',
-      color: '',
-      price:'',
-      image: '',
+        productId: '',
+        productname: '',
+        categoriesID: '',
+        gendersID: '',
+        newSaleID: '',
+        hotSaleID: '',
+        size: '',
+        color: '',
+        price: '',
+        image: '',
 
     });
     const [newProduct, setNewProduct] = useState<Partial<Product>>({
@@ -139,9 +140,9 @@ const ProductAdmin = () => {
             alert('Thêm sản phẩm thất bại!');
         }
     };
-   
 
-    
+
+
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -189,141 +190,143 @@ const ProductAdmin = () => {
     };
 
     return (
-        <div className="product-admin-container">
-            {/* Header */}
-            <div className="product-admin-container-top">
-                <h1>DANH SÁCH SẢN PHẨM</h1>
-                <button className="product-admin-button-new-product" onClick={togglePopup}>
-                    Thêm sản phẩm mới
-                </button>
-                <Modal
-                    open={showPopup}
-                    onClose={togglePopup}
-                    style={{
-                        padding: '20px',
-                        backgroundColor: '#f1f1f1',
-                        borderRadius: '10px',
-                        maxWidth: '500px',
-                        width: '100%',
-                    }}
-                >
-                    <div className="popup-form-container">
-                        <h2>Thêm sản phẩm mới</h2>
-                        <form className="product-form">
-                            <label htmlFor="imageUrl">Liên kết hình ảnh:</label>
-                            <input
-                                type="url"
-                                id="imageUrl"
-                                name="imageUrl"
-                                value={imageUrl}
-                                onChange={handleInputChange}
-                                placeholder="Nhập URL hình ảnh..."
-                                required
-                            />
-                            <label>
-                                Tên sản phẩm:
-                                <input type="text" name="name" value={newProduct.name} onChange={handleInputChange} required />
-                            </label>
-                            <label>
-                                Danh mục:
-                                <select name="categoriesID" value={newProduct.categoriesID} onChange={handleCategoryChange} required>
-                                    <option value="">Chọn danh mục</option>
-                                    {categories.map((category) => (
-                                        <option key={category.id} value={category.id}>
-                                            {category.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                            <label>
-                                New Sale:
-                                <select
-                                    name="newSaleID"
-                                    value={newProduct.newSaleID ? 'true' : 'false'}
-                                    onChange={handleNewSaleChange}
+        <div>
+            <HeaderAdmin />
+            <div className="product-admin-container">
+                {/* Header */}
+                <div className="product-admin-container-top">
+                    <h1>DANH SÁCH SẢN PHẨM</h1>
+                    <button className="product-admin-button-new-product" onClick={togglePopup}>
+                        Thêm sản phẩm mới
+                    </button>
+                    <Modal
+                        open={showPopup}
+                        onClose={togglePopup}
+                        style={{
+                            padding: '20px',
+                            backgroundColor: '#f1f1f1',
+                            borderRadius: '10px',
+                            maxWidth: '500px',
+                            width: '100%',
+                        }}
+                    >
+                        <div className="popup-form-container">
+                            <h2>Thêm sản phẩm mới</h2>
+                            <form className="product-form">
+                                <label htmlFor="imageUrl">Liên kết hình ảnh:</label>
+                                <input
+                                    type="url"
+                                    id="imageUrl"
+                                    name="imageUrl"
+                                    value={imageUrl}
+                                    onChange={handleInputChange}
+                                    placeholder="Nhập URL hình ảnh..."
                                     required
-                                >
-                                    <option value="true">Cực mới</option>
-                                    <option value="false">Bình thường</option>
-                                </select>
-                            </label>
-                            <label>
-                                Hot Sale:
-                                <select
-                                    name="hotSaleID"
-                                    value={newProduct.hotSaleID ? 'true' : 'false'}
-                                    onChange={handleHotSaleChange}
-                                    required
-                                >
-                                    <option value="true">Hot</option>
-                                    <option value="false">Bình thường</option>
-                                </select>
-                            </label>
-                            <label>
-                                Kích thước:
-                                <input type="text" name="size" value={newProduct.size} onChange={handleInputChange} required />
-                            </label>
-                            <label>
-                                Màu:
-                                <input type="text" name="color" value={newProduct.color} onChange={handleInputChange} required />
-                            </label>
-                            <label>
-                                Giá:
-                                <input type="number" name="price" value={newProduct.price} onChange={handleInputChange} required />
-                            </label>
-                            <div className="popup-buttons">
-                                <button type="button" className="submit-button" onClick={handleAddProduct}>
-                                    Thêm sản phẩm
-                                </button>
-                                <button type="button" className="cancel-button" onClick={togglePopup}>
-                                    Hủy
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </Modal>
-            </div>
-
-            {/* Product Table */}
-            <div className="product-admin-container-bottom">
-                {loading ? (
-                    <p>Đang tải dữ liệu...</p>
-                ) : currentProducts && currentProducts.length > 0 ? (
-                    <>
-                        <table className="product-admin-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Hình ảnh</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Danh mục</th>
-                                    <th>Size</th>
-                                    <th>Color</th>
-                                    <th>Giá</th>
-                                    <th>New Sale</th>
-                                    <th>Hot Sale</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {currentProducts.map((product, index) => (
-                                    <tr key={product.id}>
-                                        <td>{index + 1}</td>
-                                        <td>
-                                        <img src={product.image} alt={product.name} style={{ width: 80, height: 80 }} />
-                                        </td>
-                                        <td>{product.name}</td>
-                                        <td>{getCategoryName(product.categoriesID)}</td>
-                                        <td>{product.size}</td>
-                                        <td>{product.color}</td>
-                                        <td>{product.price} vnd</td>
-                                        <td>{product.newSaleID ? 'Cực mới' : 'Bình thường'}</td>
-                                        <td>{product.hotSaleID ? 'Hot' : 'Bình thường'}</td>
-                                        <td>
-                                        <button className="user-account-button-new-account"  >
-                                        UPDATE
+                                />
+                                <label>
+                                    Tên sản phẩm:
+                                    <input type="text" name="name" value={newProduct.name} onChange={handleInputChange} required />
+                                </label>
+                                <label>
+                                    Danh mục:
+                                    <select name="categoriesID" value={newProduct.categoriesID} onChange={handleCategoryChange} required>
+                                        <option value="">Chọn danh mục</option>
+                                        {categories.map((category) => (
+                                            <option key={category.id} value={category.id}>
+                                                {category.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </label>
+                                <label>
+                                    New Sale:
+                                    <select
+                                        name="newSaleID"
+                                        value={newProduct.newSaleID ? 'true' : 'false'}
+                                        onChange={handleNewSaleChange}
+                                        required
+                                    >
+                                        <option value="true">Cực mới</option>
+                                        <option value="false">Bình thường</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    Hot Sale:
+                                    <select
+                                        name="hotSaleID"
+                                        value={newProduct.hotSaleID ? 'true' : 'false'}
+                                        onChange={handleHotSaleChange}
+                                        required
+                                    >
+                                        <option value="true">Hot</option>
+                                        <option value="false">Bình thường</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    Kích thước:
+                                    <input type="text" name="size" value={newProduct.size} onChange={handleInputChange} required />
+                                </label>
+                                <label>
+                                    Màu:
+                                    <input type="text" name="color" value={newProduct.color} onChange={handleInputChange} required />
+                                </label>
+                                <label>
+                                    Giá:
+                                    <input type="number" name="price" value={newProduct.price} onChange={handleInputChange} required />
+                                </label>
+                                <div className="popup-buttons">
+                                    <button type="button" className="submit-button" onClick={handleAddProduct}>
+                                        Thêm sản phẩm
                                     </button>
-                                     {/* <Modal
+                                    <button type="button" className="cancel-button" onClick={togglePopup}>
+                                        Hủy
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </Modal>
+                </div>
+
+                {/* Product Table */}
+                <div className="product-admin-container-bottom">
+                    {loading ? (
+                        <p>Đang tải dữ liệu...</p>
+                    ) : currentProducts && currentProducts.length > 0 ? (
+                        <>
+                            <table className="product-admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Danh mục</th>
+                                        <th>Size</th>
+                                        <th>Color</th>
+                                        <th>Giá</th>
+                                        <th>New Sale</th>
+                                        <th>Hot Sale</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentProducts.map((product, index) => (
+                                        <tr key={product.id}>
+                                            <td>{index + 1}</td>
+                                            <td>
+                                                <img src={product.image} alt={product.name} style={{ width: 80, height: 80 }} />
+                                            </td>
+                                            <td>{product.name}</td>
+                                            <td>{getCategoryName(product.categoriesID)}</td>
+                                            <td>{product.size}</td>
+                                            <td>{product.color}</td>
+                                            <td>{product.price} vnd</td>
+                                            <td>{product.newSaleID ? 'Cực mới' : 'Bình thường'}</td>
+                                            <td>{product.hotSaleID ? 'Hot' : 'Bình thường'}</td>
+                                            <td>
+                                                <button className="user-account-button-new-account"  >
+                                                    UPDATE
+                                                </button>
+                                                {/* <Modal
                                         open={isEditPopupOpen}
                                         onClose={togglePopup1}
                                         style={{
@@ -408,29 +411,31 @@ const ProductAdmin = () => {
                                             </form>
                                         </div>
                                     </Modal> */}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        {/* Phân trang */}
-                        <div className="pagination">
-                            <button disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)}>
-                                Trước
-                            </button>
-                            <span>
-                                Trang {currentPage}/{totalPages}
-                            </span>
-                            <button disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)}>
-                                Sau
-                            </button>
-                        </div>
-                    </>
-                ) : (
-                    <p>Không có sản phẩm nào.</p>
-                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            {/* Phân trang */}
+                            <div className="pagination">
+                                <button disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)}>
+                                    Trước
+                                </button>
+                                <span>
+                                    Trang {currentPage}/{totalPages}
+                                </span>
+                                <button disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)}>
+                                    Sau
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        <p>Không có sản phẩm nào.</p>
+                    )}
+                </div>
             </div>
         </div>
+
     );
 };
 

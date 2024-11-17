@@ -12,6 +12,8 @@ import SetMale from '../pages/SetMale/SetMale';
 import SetFemale from '../pages/SetFemale/SetFemale';
 import FemaleProduct from '../components/FemaleProduct/FemaleProduct';
 import MaleProduct from '../components/MaleProduct/MaleProduct';
+import UserAccountAdmin from '../../src/admin/adminpages/UserAccount/UserAccountAdmin';
+import ProductAdmin from '../../src/admin/adminpages/ProductAdmin/ProductAdmin';
 import UserAccount from '../pages/UserAccount/UserAccount';
 import Cart from '../pages/Cart/Cart';
 
@@ -29,11 +31,13 @@ const RouterPages = () => {
     <Route path="/Homepage" element={<Homepage />} />
     <Route path="/LoginAdmin" element={<LoginAdmin />} />
     <Route path="/HomepageAdmin" element={<HomepageAdmin />} />
+    <Route path="/UserAccount" element={<UserAccount />} />
+    <Route path="/ProductAdmin" element={<ProductAdmin />} />
     <Route path="/SetMale" element={<SetMale />} />
     <Route path="/SetFemale" element={<SetFemale />} />
     <Route path="/FemaleProduct" element={<FemaleProduct />} />
     <Route path="/MaleProduct" element={<MaleProduct />} />
-    <Route path="/UserAccount" element={<UserAccount />} />
+    <Route path="/UserAccountAdmin" element={<UserAccountAdmin />} />
     <Route path="/Cart" element={<Cart />} />
    
    
