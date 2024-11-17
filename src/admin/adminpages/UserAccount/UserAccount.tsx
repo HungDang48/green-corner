@@ -61,10 +61,10 @@ const UserAccount: React.FC = () => {
         try {
             // Gửi yêu cầu DELETE đến API để xoá người dùng
             await axios.delete(`http://localhost:5000/User/${userId}`);
-    
+
             // Thông báo xoá thành công
             alert('Xoá tài khoản thành công!');
-    
+
             // Cập nhật lại danh sách người dùng sau khi xoá
             setUserList((prevUserList) => prevUserList?.filter(user => user.id !== userId) || []);
         } catch (error) {
@@ -74,13 +74,107 @@ const UserAccount: React.FC = () => {
     };
 
 
+    {/* <Modal open={isEditPopupOpen} onClose={() => setIsEditPopupOpen(false)}>
+                                                <div className="modal-content">
+                                                    <h2>Chỉnh sửa sản phẩm</h2>
+                                                    <div className="form-group">
+                                                        <label htmlFor="name">Tên sản phẩm</label>
+                                                        <input
+                                                            type="text"
+                                                            id="name"
+                                                            name="name"
+                                                            value={editProductData.name}
+                                                            onChange={handleInputChange}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="categoriesID">Danh mục</label>
+                                                        <select
+                                                            name="categoriesID"
+                                                            value={editProductData.categoriesID}
+                                                            onChange={handleCategoryChange}
+                                                        >
+                                                            {categories.map((category) => (
+                                                                <option key={category.id} value={category.id}>
+                                                                    {category.name}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="size">Size</label>
+                                                        <input
+                                                            type="text"
+                                                            id="size"
+                                                            name="size"
+                                                            value={editProductData.size}
+                                                            onChange={handleInputChange}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="color">Màu sắc</label>
+                                                        <input
+                                                            type="text"
+                                                            id="color"
+                                                            name="color"
+                                                            value={editProductData.color}
+                                                            onChange={handleInputChange}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="price">Giá</label>
+                                                        <input
+                                                            type="number"
+                                                            id="price"
+                                                            name="price"
+                                                            value={editProductData.price}
+                                                            onChange={handleInputChange}
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="newSaleID">New Sale</label>
+                                                        <select
+                                                            name="newSaleID"
+                                                            value={editProductData.newSaleID ? 'true' : 'false'}
+                                                            onChange={handleNewSaleChange}
+                                                        >
+                                                            <option value="true">Có</option>
+                                                            <option value="false">Không</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="hotSaleID">Hot Sale</label>
+                                                        <select
+                                                            name="hotSaleID"
+                                                            value={editProductData.hotSaleID ? 'true' : 'false'}
+                                                            onChange={handleHotSaleChange}
+                                                        >
+                                                            <option value="true">Có</option>
+                                                            <option value="false">Không</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label htmlFor="imageUrl">Ảnh sản phẩm</label>
+                                                        <input
+                                                            type="text"
+                                                            id="imageUrl"
+                                                            name="imageUrl"
+                                                            value={editProductData.imageUrl}
+                                                            onChange={handleInputChange}
+                                                        />
+                                                    </div>
+                                                    <div className="modal-footer">
+                                                        <button onClick={handleUpdateProduct}>Cập nhật</button>
+                                                        <button onClick={() => setIsEditPopupOpen(false)}>Đóng</button>
+                                                    </div>
+                                                </div>
+                                            </Modal> */}
 
 
 
 
 
 
-    
 
 
 
@@ -399,7 +493,7 @@ const UserAccount: React.FC = () => {
                                             </form>
                                         </div>
                                     </Modal>
-                                    <button className="user-account-action-button action-delete" onClick={() => handleDelete(user.id)}>
+                                    <button className="red" onClick={() => handleDelete(user.id)}>
                                         Xóa Bỏ
                                     </button>
                                 </td>
