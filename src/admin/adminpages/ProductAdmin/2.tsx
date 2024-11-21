@@ -378,6 +378,91 @@ const ProductAdmin = () => {
                                 </tr>
                             </thead>
                             <tbody>
+                                {/* <Modal
+                                        open={isEditPopupOpen}
+                                        onClose={togglePopup1}
+                                        style={{
+                                            padding: '20px',
+                                            backgroundColor: '#f1f1f1',
+                                            borderRadius: '10px',
+                                            maxWidth: '500px',
+                                            width: '100%',
+                                        }}
+
+                                    >
+                                        <div className="popup-form-container">
+                                            <h2>Cập nhật sản phẩm </h2>
+                                            <form className="user-account-account-form" onSubmit={}>
+                                                <label>
+                                                    cập nhật hình ảnh mới 
+                                                   <input
+                                type="url"
+                                id="imageUrl"
+                                name="imageUrl"
+                                value={imageUrl}
+                                placeholder="Nhập URL hình ảnh mới"
+                                required
+                            />
+                            <label>
+                                                </label>
+                                                <label>
+                                                    tên sản phẩm 
+                                                    <input type="text" name="username"  />
+                                                </label>
+                                                 <label>
+                                Danh mục:
+                                <select name="categoriesID"  required>
+                                    <option value="">Chọn danh mục</option>
+                                    {categories.map((category) => (
+                                        <option key={category.id} value={category.id}>
+                                            {category.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                            <label>
+                                New Sale:
+                                <select
+                                    name="newSaleID"
+                                    value={newProduct.newSaleID ? 'true' : 'false'}
+                                    
+                                    required
+                                >
+                                    <option value="true">Cực mới</option>
+                                    <option value="false">Bình thường</option>
+                                </select>
+                            </label>
+                            <label>
+                                Hot Sale:
+                                <select
+                                    name="hotSaleID"
+                                    value={newProduct.hotSaleID ? 'true' : 'false'}
+                                   
+                                    required
+                                >
+                                    <option value="true">Hot</option>
+                                    <option value="false">Bình thường</option>
+                                </select>
+                            </label>
+                                                < <label>
+                                Kích thước:
+                                <input type="text" name="size"   required />
+                            </label>
+                            <label>
+                                Màu:
+                                <input type="text" name="color"   required />
+                            </label>
+                            <label>
+                                Giá:
+                                <input type="number" name="price"     required />
+                            </label>
+                                                <div className="popup-buttons">
+                                                    <button type="submit" className="submit-button">Cập nhật</button>
+                                                    <button type="button" className="cancel-button" onClick={onCancel}>Hủy</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </Modal> */}
                                 {productsList?.map((product, index) => (
                                     <tr key={product.productId}>
                                         <td>{index + 1}</td>
@@ -415,6 +500,7 @@ const ProductAdmin = () => {
                         </div>
                     </>
                 ) : (
+                    
                     <p>Không có sản phẩm nào.</p>
                 )}
             </div>

@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import './Styleproduct.css'
+import './Styleproduct.css';
 import axios from 'axios';
-import Header from '../Header/Header';
-import Banner from '../Banner/Banner';
-import Footer from '../Footer/Footer';
-
+import { Link } from 'react-router-dom'; // Import Link từ react-router-dom
 export interface Product {
     id: string;
     name: string;
@@ -55,14 +52,15 @@ const NewProduct: React.FC = () => {
 
     return (
         <div>
-           
             <div className="header-low">
-               SẢN PHẨM MỚI VỀ
+                SẢN PHẨM MỚI VỀ
             </div>
             <div className="product-grid">
                 {currentProducts && currentProducts.map((product) => (
                     <div className="product" key={product.id}>
-                        <img alt={product.name} height="400" src={product.image} width="300" />
+                        <Link to={`/ProductDetail/${product.id}`}> {/* Sử dụng Link */}
+                            <img alt={product.name} height="400" src={product.image} width="300" />
+                        </Link>
                         <div className="product-title">
                             {product.name}
                         </div>
@@ -72,6 +70,7 @@ const NewProduct: React.FC = () => {
                     </div>
                 ))}
             </div>
+            
             <div className="pagination">
                 <button className='BTN-pagination'
                     onClick={() => paginate(currentPage - 1)}
@@ -87,9 +86,8 @@ const NewProduct: React.FC = () => {
                     Next
                 </button>
             </div>
-            
         </div>
     );
 };
 
-export default NewProduct
+export default NewProduct;

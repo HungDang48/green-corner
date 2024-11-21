@@ -5,7 +5,7 @@ import Modal from '../../component/modal';
 import HeaderAdmin from '../../component/headerAdmin/HeaderAdmin';
 
 // Định nghĩa kiểu dữ liệu cho sản phẩm
-interface Product {
+export interface Product {
     name: string;
     categoriesID: number;
     size: string;
@@ -32,30 +32,48 @@ interface Category {
 
 
 const ProductAdmin = () => {
-    const [imageUrl, setImageUrl] = useState<string>('');
+   
     const [loading, setLoading] = useState<boolean>(true);
+    const [imageUrl, setImageUrl] = useState<string>('');
+
+
     const [productsList, setProductsList] = useState<Product[] | null>(null);
     const [categoriesList, setCategoriesList] = useState<Category[] | null>(null);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const productsPerPage = 10; // Số sản phẩm hiển thị trên mỗi trang
-    const [showPopup, setShowPopup] = useState<boolean>(false);
-
     const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
-    const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
-    const [editUserData, setEditUserData] = useState<Product | null>(null);
-    const [formData, setFormData] = useState({
-        productId: '',
-        productname: '',
-        categoriesID: '',
-        gendersID: '',
-        newSaleID: '',
-        hotSaleID: '',
-        size: '',
-        color: '',
-        price: '',
-        image: '',
 
-    });
+
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const productsPerPage = 7; 
+
+
+    const [showPopup, setShowPopup] = useState<boolean>(false);
+    const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+
+    const [products, setProducts] = useState<Product[]>([]);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+   
+    
+    
+    const UpdateAccount = ({ }) => {
+        const [formData, setFormData] = useState({
+            productId: '',
+            productname: '',
+            categoriesID: '',
+            gendersID: '',
+            newSaleID: '',
+            hotSaleID: '',
+            size: '',
+            color: '',
+            price: '',
+            image: '',
+    
+        });
+    }
+       
+ 
+        
+    
+    
     const [newProduct, setNewProduct] = useState<Partial<Product>>({
         name: '',
         categoriesID: 1,
@@ -66,11 +84,21 @@ const ProductAdmin = () => {
         newSaleID: false,
         hotSaleID: false,
     });
+
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
-    const togglePopup1 = () => setIsEditPopupOpen(!isEditPopupOpen);
+    const toggleEditPopup = () => setIsEditPopupOpen(!isEditPopupOpen);
+    
 
+    const handleEditProduct = (productId: number) => {
+        const product = products.find((p) => p.id === productId);
+        if (product) {
+          setSelectedProduct(product);
+          setIsEditPopupOpen(true);
+        }
+      };
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setNewProduct((prev) => ({
@@ -326,91 +354,7 @@ const ProductAdmin = () => {
                                                 <button className="user-account-button-new-account"  >
                                                     UPDATE
                                                 </button>
-                                                {/* <Modal
-                                        open={isEditPopupOpen}
-                                        onClose={togglePopup1}
-                                        style={{
-                                            padding: '20px',
-                                            backgroundColor: '#f1f1f1',
-                                            borderRadius: '10px',
-                                            maxWidth: '500px',
-                                            width: '100%',
-                                        }}
-
-                                    >
-                                        <div className="popup-form-container">
-                                            <h2>Cập nhật sản phẩm </h2>
-                                            <form className="user-account-account-form" onSubmit={handleSubmitUpdate}>
-                                                <label>
-                                                    cập nhật hình ảnh mới 
-                                                   <input
-                                type="url"
-                                id="imageUrl"
-                                name="imageUrl"
-                                value={imageUrl}
-                                placeholder="Nhập URL hình ảnh mới"
-                                required
-                            />
-                            <label>
-                                                </label>
-                                                <label>
-                                                    tên sản phẩm 
-                                                    <input type="text" name="username"  />
-                                                </label>
-                                                 <label>
-                                Danh mục:
-                                <select name="categoriesID"  required>
-                                    <option value="">Chọn danh mục</option>
-                                    {categories.map((category) => (
-                                        <option key={category.id} value={category.id}>
-                                            {category.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                            <label>
-                                New Sale:
-                                <select
-                                    name="newSaleID"
-                                    value={newProduct.newSaleID ? 'true' : 'false'}
-                                    
-                                    required
-                                >
-                                    <option value="true">Cực mới</option>
-                                    <option value="false">Bình thường</option>
-                                </select>
-                            </label>
-                            <label>
-                                Hot Sale:
-                                <select
-                                    name="hotSaleID"
-                                    value={newProduct.hotSaleID ? 'true' : 'false'}
-                                   
-                                    required
-                                >
-                                    <option value="true">Hot</option>
-                                    <option value="false">Bình thường</option>
-                                </select>
-                            </label>
-                                                < <label>
-                                Kích thước:
-                                <input type="text" name="size"   required />
-                            </label>
-                            <label>
-                                Màu:
-                                <input type="text" name="color"   required />
-                            </label>
-                            <label>
-                                Giá:
-                                <input type="number" name="price"     required />
-                            </label>
-                                                <div className="popup-buttons">
-                                                    <button type="submit" className="submit-button">Cập nhật</button>
-                                                    <button type="button" className="cancel-button" onClick={onCancel}>Hủy</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </Modal> */}
+                                                
                                             </td>
                                         </tr>
                                     ))}
