@@ -7,9 +7,9 @@ import { useLocation } from 'react-router-dom';
 const CheckOut = () => {
   const location = useLocation();
   const [cartItems, setCartItems] = useState<any[]>(location.state?.cartItems || []);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [totalPrice, setTotalPrice] = useState<number>(location.state?.totalPrice || 0);
 
-  // Tính tổng tiền hàng
+  // Tính tổng tiền hàng (có thể tính lại nếu cần)
   useEffect(() => {
     const total = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     setTotalPrice(total);

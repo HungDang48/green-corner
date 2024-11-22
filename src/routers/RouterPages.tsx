@@ -31,7 +31,8 @@ const RouterPages = () => {
       <Route path="/loginadmin" element={<LoginAdmin />} />
       <Route path="/homepageadmin" element={<HomepageAdmin />} />
       <Route path="/useraccount" element={<UserAccount />} />
-      <Route path="/productadmin" element={<ProductAdmin />} />
+      <Route path="/ProductAdmin" element={<ProductAdmin />} />
+      
       <Route path="/setmale" element={<SetMale />} />
       <Route path="/setfemale" element={<SetFemale />} />
       <Route path="/femaleproduct" element={<FemaleProduct />} />

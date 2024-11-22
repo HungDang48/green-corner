@@ -84,8 +84,14 @@ const Cart = () => {
   };
 
   const handleCheckOutClick = () => {
-    navigate('/checkout');
+    navigate('/checkout', {
+      state: {
+        cartItems: cartItems,
+        totalPrice: calculateCartTotal(),
+      }
+    });
   };
+  
 
   return (
     <div>

@@ -23,7 +23,7 @@ const MaleProduct: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const productsPerPage = 10;
+    const productsPerPage = 9;
     const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const MaleProduct: React.FC = () => {
             try {
                 setLoading(true);
                 const response = await axios.get<Product[]>('http://localhost:5000/products');
-                const filteredProducts = response.data.filter(product => product.gendersID === 1 && 
+                const filteredProducts = response.data.filter(product => product.gendersID === 1 &&
                     (!selectedCategoryId || product.categoryId === selectedCategoryId));
                 setProducts(filteredProducts);
             } catch (error) {

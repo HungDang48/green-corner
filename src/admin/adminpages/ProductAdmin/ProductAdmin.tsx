@@ -32,7 +32,7 @@ interface Category {
 
 
 const ProductAdmin = () => {
-   
+
     const [loading, setLoading] = useState<boolean>(true);
     const [imageUrl, setImageUrl] = useState<string>('');
 
@@ -43,17 +43,34 @@ const ProductAdmin = () => {
 
 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const productsPerPage = 7; 
+    const productsPerPage = 7;
+    const [productId, setProductId] = useState<number | null>(null);
 
 
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
 
+    const [showPopupUpdate, setShowPopupUpdate] = useState<boolean>(false);
+    const [isEditPopupOpenUpdate, setIsEditPopupOpenUpdate] = useState(false);
+
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-   
-    
-    
+    const [formData, setFormData] = useState({
+        productId: '',
+            productname: '',
+            categoriesID: '',
+            gendersID: '',
+            newSaleID: '',
+            hotSaleID: '',
+            size: '',
+            color: '',
+            price: '',
+            image: '',
+
+
+    });
+
+
     const UpdateAccount = ({ }) => {
         const [formData, setFormData] = useState({
             productId: '',
@@ -66,14 +83,14 @@ const ProductAdmin = () => {
             color: '',
             price: '',
             image: '',
-    
+
         });
     }
-       
- 
-        
-    
-    
+
+
+
+
+
     const [newProduct, setNewProduct] = useState<Partial<Product>>({
         name: '',
         categoriesID: 1,
@@ -88,17 +105,47 @@ const ProductAdmin = () => {
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
+    const togglePopupUpdate = () => {
+        setShowPopupUpdate(!showPopupUpdate);
+    };
+    const onUpdate = ( productId: number) => {
+        setProductId( productId);
+        togglePopupUpdate();
+    };
+    const onCancel = () => {
+        setProductId(null);
+        togglePopupUpdate();
+    }
+
     const toggleEditPopup = () => setIsEditPopupOpen(!isEditPopupOpen);
-    
+
 
     const handleEditProduct = (productId: number) => {
         const product = products.find((p) => p.id === productId);
         if (product) {
-          setSelectedProduct(product);
-          setIsEditPopupOpen(true);
+            setSelectedProduct(product);
+            setIsEditPopupOpen(true);
         }
-      };
+    };
+
+
+
+
+
+
+
+    const handleInputChangeUpdate = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+
+
+
+
+
     
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setNewProduct((prev) => ({
@@ -168,7 +215,33 @@ const ProductAdmin = () => {
             alert('Thêm sản phẩm thất bại!');
         }
     };
+    const handleSubmitUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
+        // Kiểm tra xem password và confirmPassword có khớp nhau không
+
+        try {
+            // Gửi PATCH request đến API
+            await axios.patch(`http://localhost:5000/User/${productId}`, {
+                id: productId,
+                name: formData.productname || '',
+                categoriesID: Number(formData.categoriesID) || '',
+                gendersID: Number(formData.gendersID) || '',
+                newSaleID: formData.newSaleID === 'true' || '',
+                hotSaleID: formData.hotSaleID === 'true' || '',
+                size: formData.size || '',
+               
+            });
+            alert('Cập nhật thông tin thành công!');
+            togglePopupUpdate(); // Đóng popup sau khi cập nhật
+            const response = await axios.get<Product[]>('http://localhost:5000/products');
+            setProductsList(response.data);
+        } catch (error) {
+            console.error('Cập nhật thất bại:', error);
+            alert('Cập nhật thông tin thất bại!');
+        }
+        setProductId(null);
+    };
 
 
 
@@ -337,24 +410,110 @@ const ProductAdmin = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {currentProducts.map((product, index) => (
-                                        <tr key={product.id}>
+                                    {currentProducts.map((products, index) => (
+                                        <tr key={products.id}>
                                             <td>{index + 1}</td>
                                             <td>
-                                                <img src={product.image} alt={product.name} style={{ width: 80, height: 80 }} />
+                                                <img src={products.image} alt={products.name} style={{ width: 80, height: 80 }} />
                                             </td>
-                                            <td>{product.name}</td>
-                                            <td>{getCategoryName(product.categoriesID)}</td>
-                                            <td>{product.size}</td>
-                                            <td>{product.color}</td>
-                                            <td>{product.price} vnd</td>
-                                            <td>{product.newSaleID ? 'Cực mới' : 'Bình thường'}</td>
-                                            <td>{product.hotSaleID ? 'Hot' : 'Bình thường'}</td>
+                                            <td>{products.name}</td>
+                                            <td>{getCategoryName(products.categoriesID)}</td>
+                                            <td>{products.size}</td>
+                                            <td>{products.color}</td>
+                                            <td>{products.price} vnd</td>
+                                            <td>{products.newSaleID ? 'Cực mới' : 'Bình thường'}</td>
+                                            <td>{products.hotSaleID ? 'Hot' : 'Bình thường'}</td>
                                             <td>
-                                                <button className="user-account-button-new-account"  >
+                                                <button className="user-account-button-new-account" onClick={() => onUpdate(products.id)}  >
                                                     UPDATE
                                                 </button>
-                                                
+                                                <Modal
+                                                    open={showPopupUpdate}
+                                                    onClose={togglePopupUpdate}
+                                                    style={{
+                                                        padding: '20px',
+                                                        backgroundColor: '#f1f1f1',
+                                                        borderRadius: '10px',
+                                                        maxWidth: '500px',
+                                                        width: '100%',
+                                                    }}
+                                                >
+                                                    <div className="popup-form-container">
+                                                        <h2>UPDATE SẢN PHẨM </h2>
+                                                        <form className="product-form">
+                                                            <label htmlFor="imageUrl">Liên kết hình ảnh:</label>
+                                                            <input
+                                                                type="url"
+                                                                id="imageUrl"
+                                                                name="imageUrl"
+                                                                value={formData.image}
+                                                                onChange={handleInputChangeUpdate}
+                                                                placeholder="Nhập URL hình ảnh..."
+                                                                required
+                                                            />
+                                                            <label>
+                                                                Tên sản phẩm:
+                                                                <input type="text" name="name" value={formData.productname} onChange={handleInputChangeUpdate} required />
+                                                            </label>
+                                                            <label>
+                                                                Danh mục:
+                                                                <select name="categoriesID" value={formData.categoriesID} onChange={handleInputChangeUpdate} required>
+                                                                    <option value="">Chọn danh mục</option>
+                                                                    {categories.map((category) => (
+                                                                        <option key={category.id} value={category.id}>
+                                                                            {category.name}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
+                                                            </label>
+                                                            <label>
+                                                                New Sale:
+                                                                <select
+                                                                    name="newSaleID"
+                                                                    value={formData.newSaleID ? 'true' : 'false'}
+                                                                    onChange={handleInputChangeUpdate}
+                                                                    required
+                                                                >
+                                                                    <option value="true">Cực mới</option>
+                                                                    <option value="false">Bình thường</option>
+                                                                </select>
+                                                            </label>
+                                                            <label>
+                                                                Hot Sale:
+                                                                <select
+                                                                    name="hotSaleID"
+                                                                    value={formData.hotSaleID ? 'true' : 'false'}
+                                                                    onChange={handleInputChangeUpdate}
+                                                                    required
+                                                                >
+                                                                    <option value="true">Hot</option>
+                                                                    <option value="false">Bình thường</option>
+                                                                </select>
+                                                            </label>
+                                                            <label>
+                                                                Kích thước:
+                                                                <input type="text" name="size" value={formData.size} onChange={handleInputChangeUpdate} required />
+                                                            </label>
+                                                            <label>
+                                                                Màu:
+                                                                <input type="text" name="color" value={formData.color} onChange={handleInputChangeUpdate} required />
+                                                            </label>
+                                                            <label>
+                                                                Giá:
+                                                                <input type="number" name="price" value={formData.price} onChange={handleInputChangeUpdate} required />
+                                                            </label>
+                                                            <div className="popup-buttons">
+                                                                <button type="button" className="submit-button" >
+                                                                    UPDATE SẢN PHẨM
+                                                                </button>
+                                                                <button type="button" className="cancel-button" onClick={togglePopup}>
+                                                                    Hủy
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </Modal>
+
                                             </td>
                                         </tr>
                                     ))}
