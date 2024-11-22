@@ -1,174 +1,151 @@
-/* Tổng quan */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
-}
-
 .checkout-page {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.checkout-page h1,
-.checkout-page h2 {
+    width: 55%;
+    margin: 0 auto;
+    padding: 30px 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .checkout-title {
     text-align: center;
     color: #333;
-    margin-bottom: 20px;
-}
-
-.checkout-page section {
+    font-size: 2.4rem;
     margin-bottom: 30px;
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-}
-
-.checkout-page form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.checkout-page input,
-.checkout-page textarea,
-.checkout-page select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.checkout-page textarea {
-    height: 100px;
-    resize: none;
-}
-
-/* Giỏ hàng */
-.product-list ul {
-    list-style: none;
-    padding: 0;
-}
-
-.product-list li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-}
-
-.product-list img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-right: 15px;
-    border-radius: 5px;
-}
-
-.product-list div {
-    flex: 1;
-}
-
-.product-list p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #555;
-}
-
-.product-list p:last-child {
-    font-weight: bold;
+  }
+  
+  h2 {
     color: #333;
-}
-
-/* Phương thức giao hàng */
-.shipping-method select {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+  }
+  
+  .customer-info, .product-list, .shipping-method, .promo-code, .order-summary {
+    background-color: #f9f9f9;
+    padding: 18px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .customer-info input,
+  .customer-info textarea,
+  .promo-input {
     width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-/* Phương thức thanh toán */
-.payment-method label {
-    display: block;
-    font-size: 16px;
-    margin: 10px 0;
-    cursor: pointer;
-}
-
-.payment-method input {
-    margin-right: 10px;
-}
-
-/* Mã giảm giá */
-.promo-code {
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  textarea {
+    height: 90px;
+    resize: none;
+  }
+  
+  .cart-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.promo-code input {
-    flex: 1;
-    margin-right: 10px;
+    margin-bottom: 12px;
     padding: 10px;
-    font-size: 16px;
-}
-
-.promo-code button {
-    padding: 10px 15px;
-    background-color: #5cb85c;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-item img {
+    max-width: 70px;
+    height: auto;
+    border-radius: 6px;
+  }
+  
+  .cart-item-details {
+    flex: 1;
+    margin-left: 12px;
+  }
+  
+  .item-name {
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+  
+  .shipping-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .payment-method label {
+    display: block;
+    margin: 6px 0;
+    font-size: 1.1rem;
+  }
+  
+  .promo-code {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .promo-input {
+    width: 70%;
+    margin-right: 10px;
+  }
+  
+  .apply-btn {
+    padding: 8px 15px;
+    background-color: #28a745;
     color: white;
-    font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.promo-code button:hover {
-    background-color: #4cae4c;
-}
-
-/* Tóm tắt đơn hàng */
-.order-summary {
-    text-align: right;
-    font-size: 16px;
-    color: #333;
-}
-
-.order-summary p,
-.order-summary h3 {
-    margin: 10px 0;
-}
-
-.order-summary h3 {
-    font-size: 18px;
+  }
+  
+  .apply-btn:hover {
+    background-color: #218838;
+  }
+  
+  .total-price, .order-summary p {
+    font-size: 1.2rem;
+  }
+  
+  .order-summary h3 {
+    font-size: 1.4rem;
     font-weight: bold;
-    color: #000;
-}
-
-/* Nút xác nhận đặt hàng */
-.confirm-order {
+    color: #e74c3c;
+  }
+  
+  .confirm-order {
     display: block;
     width: 100%;
-    padding: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
+    padding: 12px;
+    background-color: #3498db;
     color: white;
-    background-color: #007bff;
+    font-size: 1.3rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.confirm-order:hover {
-    background-color: #0056b3;
-}
+    margin-top: 20px;
+  }
+  
+  .confirm-order:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Phương thức thanh toán và mã giảm giá container */
+  .payment-and-promo {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  /* Cải tiến thiết kế cho phương thức thanh toán */
+  .payment-method {
+    flex: 1;
+  }
+  
+  /* Cải tiến thiết kế cho mã giảm giá */
+  .promo-code {
+    flex: 1;
+  }
+  
