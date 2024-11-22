@@ -56,7 +56,36 @@ const FemaleProduct: React.FC = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
+ // const handleAddToCart = () => {
+    //     const carts = JSON.parse(localStorage.getItem('carts') || '{}');
+    //     const userCart = carts['guest'] || []; // Sử dụng giỏ hàng cho khách
 
+    //     const existingProductIndex = userCart.findIndex(
+    //         (item: any) => item.id === product.id && item.color === selectedColor
+    //     );
+
+    //     if (existingProductIndex > -1) {
+    //         userCart[existingProductIndex].quantity += quantity;
+    //     } else {
+    //         userCart.push({
+    //             id: product.id,
+    //             name: product.name,
+    //             price: product.price,
+    //             image: product.image,
+    //             quantity,
+    //             color: selectedColor, // Lưu màu đã chọn
+    //         });
+    //     }
+
+    //     carts['guest'] = userCart;
+    //     localStorage.setItem('carts', JSON.stringify(carts));
+
+    //     // Phát sự kiện để thông báo thay đổi giỏ hàng
+    //     window.dispatchEvent(new Event('cartUpdated'));
+
+    //     alert('Sản phẩm đã được thêm vào giỏ hàng!');
+    // };
+  
     return (
         <div>
             <div className="container-product">

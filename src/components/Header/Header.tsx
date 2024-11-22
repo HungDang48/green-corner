@@ -1,14 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import './styleheader.css';
 import { useNavigate } from 'react-router-dom';
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+  color: string;
+  size: string;
+}
 
 const Header = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    const userInLocal = localStorage.getItem('user') || ""
-    if (!userInLocal) return false;
-    return true
+    const userInLocal = localStorage.getItem('user') || '';
+    return userInLocal ? true : false;
   });
+
+  const [cartItemCount, setCartItemCount] = useState<number>(0);
+
+  useEffect(() => {
+    // Lấy giỏ hàng từ localStorage
+    const cart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    // Tính tổng số lượng sản phẩm trong giỏ hàng
+    const totalQuantity = cart.reduce((total: number, item: CartItem) => total + item.quantity, 0);
+    setCartItemCount(totalQuantity);
+  }, []);
 
   const handleLoginClick = () => {
     navigate('/login');
@@ -34,26 +53,28 @@ const Header = () => {
   const handleFemaleClick = () => {
     navigate('/FemaleProduct');
   };
-
   const handleUserAccountClick = () => {
     navigate('/UserAccount');
   };
-  
   const handleCartClick = () => {
     navigate('/Cart');
   };
 
   const handleLogoutClick = () => {
-    // Đặt lại trạng thái đăng nhập khi người dùng đăng xuất
-    localStorage.setItem('isLoggedIn', 'false');
+    // Xóa thông tin tài khoản khỏi localStorage
+    localStorage.removeItem('user'); // Xóa thông tin người dùng
+    localStorage.removeItem('isLoggedIn'); // Xóa trạng thái đăng nhập
+    
+    // Cập nhật lại trạng thái đăng nhập trong ứng dụng
     setIsLoggedIn(false); // Cập nhật lại trạng thái đăng nhập
+  
+    // Điều hướng người dùng về trang chủ
     navigate('/Homepage');
   };
 
   const handleLoginSuccess = () => {
-    // Cập nhật trạng thái đăng nhập và localStorage khi đăng nhập thành công
     localStorage.setItem('isLoggedIn', 'true');
-    setIsLoggedIn(true); // Cập nhật trạng thái đăng nhập
+    setIsLoggedIn(true);
   };
 
   return (
@@ -77,7 +98,6 @@ const Header = () => {
           </div>
           <div className="menu">
             <a href="#" onClick={handleHomePageClick}>TRANG CHỦ</a>
-            <a href="#" onClick={handleProductDetailClick}>DETAIL</a>
             <a href="#" onClick={handleMaleClick}>NAM</a>
             <a href="#" onClick={handleFemaleClick}>NỮ</a>
           </div>
@@ -86,10 +106,16 @@ const Header = () => {
             <div className="search-icons">
               {isLoggedIn ? (
                 <>
-                  <span className="icon cart-icon" onClick={handleCartClick}>🛒</span>
+                  <span className="icon cart-icon" onClick={handleCartClick}>
+                  🛒
+                    {/* Hiển thị số lượng sản phẩm trong giỏ hàng */}
+                    {cartItemCount > 0 && (
+                      <span className="cart-count">{cartItemCount}</span>
+                    )}
+                  </span>
                   <span className="icon user-icon">👤
                     <div className="user-menu">
-                    <a href="#" onClick={handleUserAccountClick}>thông tin cá nhân</a>
+                      <a href="#" onClick={handleUserAccountClick}>thông tin cá nhân</a>
                       <a href="#">Đơn hàng</a>
                       <a href="#" onClick={handleLogoutClick}>Đăng xuất</a>
                     </div>

@@ -3,7 +3,7 @@ import './FemaleProduct.css';
 import axios from 'axios';
 import Header from '../Header/Header';
 import Banner from '../Banner/Banner';
-
+import { Link } from 'react-router-dom';
 
 export interface Product {
     id: string;
@@ -62,40 +62,50 @@ const FemaleProduct: React.FC = () => {
     if (error) return <p>Error: {error.message}</p>;
 
     return (
-        
         <div>
             <Header />
-           <Banner/>
+            <Banner />
             <div className="container-product">
                 <body>
-                <div className="nav">
-                    <div className="header">
-                        Nữ
-                        <a href="#" onClick={() => handleCategoryClick(2)}>SƠ MI</a>
-                        <a href="#" onClick={() => handleCategoryClick(3)}>ÁO VEST</a>
-                        <a href="#" onClick={() => handleCategoryClick(4)}>CROPTOP</a>
-                        <a href="#" onClick={() => handleCategoryClick(5)}>ÁO NỈ</a>
-                    </div>
-                </div>
-                <div className="product-grid">
-                    {currentProducts && currentProducts.map((product) => (
-                        <div className="product" key={product.id}>
-                            <img alt={product.name} height="400" src={product.image} width="300" />
-                            <div className="product-title">{product.name}</div>
-                            <div className="product-price">{product.price} VND</div>
+                    <div className="nav">
+                        <div className="header">
+                            Nữ
+                            <a href="#" onClick={() => handleCategoryClick(2)}>SƠ MI</a>
+                            <a href="#" onClick={() => handleCategoryClick(3)}>ÁO VEST</a>
+                            <a href="#" onClick={() => handleCategoryClick(4)}>CROPTOP</a>
+                            <a href="#" onClick={() => handleCategoryClick(5)}>ÁO NỈ</a>
                         </div>
-                    ))}
-                </div>
-                <div className="pagination">
-                    <button className='BTN-pagination' onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-                    <span> Page {currentPage} </span>
-                    <button className='BTN-pagination' onClick={() => paginate(currentPage + 1)}
-                        disabled={!products || currentPage === Math.ceil((products.length || 0) / productsPerPage)}>
-                        Next
-                    </button>
-                </div>
+                    </div>
+                    <div className="product-grid">
+                        {currentProducts && currentProducts.map((product) => (
+                            <div className="product" key={product.id}>
+                                {/* Thêm Link để dẫn tới trang chi tiết sản phẩm */}
+                                <Link to={`/productdetail/${product.id}`}>
+                                    <img alt={product.name} height="400" src={product.image} width="300" />
+                                    <div className="product-title">{product.name}</div>
+                                    <div className="product-price">{product.price} VND</div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="pagination">
+                        <button
+                            className="BTN-pagination"
+                            onClick={() => paginate(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+                        <span> Page {currentPage} </span>
+                        <button
+                            className="BTN-pagination"
+                            onClick={() => paginate(currentPage + 1)}
+                            disabled={!products || currentPage === Math.ceil((products.length || 0) / productsPerPage)}
+                        >
+                            Next
+                        </button>
+                    </div>
                 </body>
-                
             </div>
         </div>
     );

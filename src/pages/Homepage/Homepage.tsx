@@ -23,14 +23,14 @@ const Homepage = () => {
     <div>
       <Header />
       <Banner  />
-
+      <UniProduct />
       {/* <MaleProduct />
       <FemaleProduct /> */}
       <NewProduct />
       <HotSaleProduct />
       {/* <ProductDetail /> */}
       {/* <ExampleComponent /> */}
-      <UniProduct />
+      
 
      
       <Footer />

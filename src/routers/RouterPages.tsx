@@ -15,6 +15,9 @@ import ProductAdmin from '../admin/adminpages/ProductAdmin/ProductAdmin';
 import UserAccount from '../pages/UserAccount/UserAccount';
 import Cart from '../pages/Cart/Cart';
 import NewProduct from '../components/NewProduct/NewProduct';
+import HotSaleProduct from '../components/HotsaleProduct/HotSaleProduct';
+import UniProduct from '../components/UniProduct/UniProduct';
+import CheckOut from '../pages/CheckOut/CheckOut';
 
 const RouterPages = () => {
   return (
@@ -35,7 +38,12 @@ const RouterPages = () => {
       <Route path="/maleproduct" element={<MaleProduct />} />
       <Route path="/useraccountadmin" element={<UserAccountAdmin />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/CheckOut" element={<CheckOut />} />
       <Route path="/newproduct" element={<NewProduct />} /> {/* Thay vì `/`, đặt tên cụ thể */}
+      <Route path="/hotsale" element={<HotSaleProduct />} />
+      <Route path="/uniproduct" element={<UniProduct />} />
+   
+
     </Routes>
   );
 };

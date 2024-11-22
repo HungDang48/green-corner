@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './UniProduct.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export interface Product {
     id: string;
@@ -47,63 +48,53 @@ const UniProduct: React.FC = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
+
     return (
         <div>
             <div className="container-product">
-
                 <body>
                     <div className="nav">
                         <div className="header">
                             UNISEX
-                            <a href="#">
-                                T-SHIRT
-                            </a>
-                            <a href="#">
-                                QUẦN TÚI HỘP
-                            </a>
-                            <a href="#">
-                                QUẦN KAKI
-                            </a>
-                            <a href="#">
-                                ÁO KHOÁT
-                            </a>
+                            <a href="#">T-SHIRT</a>
+                            <a href="#">QUẦN TÚI HỘP</a>
+                            <a href="#">QUẦN KAKI</a>
+                            <a href="#">ÁO KHOÁT</a>
                         </div>
-
                     </div>
                     <div className="product-grid">
                         {currentProducts && currentProducts.map((product) => (
                             <div className="product" key={product.id}>
-                                <img alt={product.name} height="400" src={product.image} width="300" />
-                                <div className="product-title">
-                                    {product.name}
-                                </div>
-                                <div className="product-price">
-                                    {product.price} VND
-                                </div>
+                                {/* Thêm Link để dẫn tới trang chi tiết sản phẩm */}
+                                <Link to={`/productdetail/${product.id}`}>
+                                    <img alt={product.name} height="400" src={product.image} width="300" />
+                                    <div className="product-title">{product.name}</div>
+                                    <div className="product-price">{product.price} VND</div>
+                                </Link>
                             </div>
                         ))}
                     </div>
                     <div className="pagination">
-                        <button className='BTN-pagination'
+                        <button
+                            className="BTN-pagination"
                             onClick={() => paginate(currentPage - 1)}
                             disabled={currentPage === 1}
                         >
                             Previous
                         </button>
                         <span> Page {currentPage} </span>
-                        <button className='BTN-pagination'
+                        <button
+                            className="BTN-pagination"
                             onClick={() => paginate(currentPage + 1)}
                             disabled={!products || currentPage === Math.ceil((products.length || 0) / productsPerPage)}
                         >
                             Next
                         </button>
                     </div>
-
                 </body>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default UniProduct
+export default UniProduct;

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import './StyleHotProduct.css'
+import './StyleHotProduct.css';
 import axios from 'axios';
-import Header from '../Header/Header';
-import Banner from '../Banner/Banner';
-import Footer from '../Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 
 export interface Product {
     id: string;
@@ -26,6 +24,7 @@ const HotSaleProduct: React.FC = () => {
     const [error, setError] = useState<Error | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const productsPerPage = 10;
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -50,18 +49,25 @@ const HotSaleProduct: React.FC = () => {
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+    const handleProductClick = (id: string) => {
+        navigate(`/productdetail/${id}`);
+    };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
     return (
         <div>
-            
             <div className="header-low">
-               SẢN PHẨM BÁN CHẠY
+                SẢN PHẨM BÁN CHẠY
             </div>
             <div className="product-grid">
                 {currentProducts && currentProducts.map((product) => (
-                    <div className="product" key={product.id}>
+                    <div 
+                        className="product" 
+                        key={product.id} 
+                        onClick={() => handleProductClick(product.id)}
+                    >
                         <img alt={product.name} height="400" src={product.image} width="300" />
                         <div className="product-title">
                             {product.name}
@@ -87,9 +93,8 @@ const HotSaleProduct: React.FC = () => {
                     Next
                 </button>
             </div>
-            
         </div>
     );
 };
 
-export default HotSaleProduct
+export default HotSaleProduct;

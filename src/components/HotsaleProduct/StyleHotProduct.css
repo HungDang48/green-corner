@@ -6,6 +6,29 @@ body {
     /* border: 3px solid brown; */
     width: 100%;
 }
+.product {
+    .product {
+        cursor: pointer; /* Thay đổi con trỏ chuột thành hình bàn tay */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển động mượt */
+        border: 1px solid transparent; /* Đường viền ẩn */
+        padding: 10px; /* Tạo không gian trong sản phẩm */
+        border-radius: 10px; /* Bo tròn góc cho đẹp */
+    }
+    
+    .product:hover {
+        transform: translateY(-10px) scale(1.05); /* Nâng sản phẩm lên và phóng to nhẹ */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ */
+        border: 1px solid #ff7f50; /* Đổi màu viền khi hover */
+        background-color: rgba(255, 127, 80, 0.1); /* Làm nổi bật nền */
+    }
+        cursor: pointer; /* Thay đổi con trỏ chuột thành hình bàn tay */
+    transition: transform 0.2s ease; /* Tạo hiệu ứng nhẹ khi hover */
+}
+
+.product:hover {
+    transform: scale(1.05); /* Phóng to sản phẩm nhẹ khi hover */
+}
+
 .header {
     font-size: 40px;
     font-weight: bolder;
