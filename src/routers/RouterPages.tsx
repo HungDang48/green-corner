@@ -18,6 +18,7 @@ import NewProduct from '../components/NewProduct/NewProduct';
 import HotSaleProduct from '../components/HotsaleProduct/HotSaleProduct';
 import UniProduct from '../components/UniProduct/UniProduct';
 import CheckOut from '../pages/CheckOut/CheckOut';
+import OrderAdmin from '../admin/adminpages/Order/OrderAdmin';
 
 const RouterPages = () => {
   return (
@@ -43,6 +44,7 @@ const RouterPages = () => {
       <Route path="/newproduct" element={<NewProduct />} /> {/* Thay vì `/`, đặt tên cụ thể */}
       <Route path="/hotsale" element={<HotSaleProduct />} />
       <Route path="/uniproduct" element={<UniProduct />} />
+      <Route path="/OrderAdmin" element={<OrderAdmin />} />
    
 
     </Routes>

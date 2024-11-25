@@ -148,4 +148,36 @@
   .promo-code {
     flex: 1;
   }
-  
+  /* Thêm vào trong file CSS của bạn */
+.Toastify__toast-container {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important; /* Căn giữa chính xác */
+  z-index: 9999 !important; /* Đảm bảo thông báo hiển thị trên tất cả các phần tử khác */
+}
+
+.Toastify__toast {
+  border-radius: 10px; /* Tạo góc bo tròn cho thông báo */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ nhẹ cho thông báo */
+}
+
+.Toastify__toast--success {
+  background-color: #28a745; /* Màu nền khi thông báo thành công */
+  color: white;
+}
+
+.Toastify__toast--error {
+  background-color: #dc3545; /* Màu nền khi thông báo lỗi */
+  color: white;
+}
+
+.Toastify__toast--warn {
+  background-color: #ffc107; /* Màu nền khi thông báo cảnh báo */
+  color: black;
+}
+
+.Toastify__toast--info {
+  background-color: #17a2b8; /* Màu nền khi thông báo thông tin */
+  color: white;
+}

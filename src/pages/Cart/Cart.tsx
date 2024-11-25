@@ -41,7 +41,6 @@ const Cart = () => {
       window.removeEventListener('cartUpdated', handleCartUpdate);
     };
   }, []);
-  
 
   const calculateTotal = (price: number, quantity: number) => {
     return price * quantity;
@@ -90,8 +89,17 @@ const Cart = () => {
         totalPrice: calculateCartTotal(),
       }
     });
+  
+    // Sau khi điều hướng tới trang Checkout, xóa giỏ hàng khỏi localStorage
+    localStorage.removeItem('carts');
   };
   
+
+  const clearCartAfterOrder = () => {
+    // Xóa toàn bộ giỏ hàng từ localStorage
+    localStorage.removeItem('carts');
+    setCartItems([]);
+  };
 
   return (
     <div>

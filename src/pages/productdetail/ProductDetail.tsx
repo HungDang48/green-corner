@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useParams } from 'react-router-dom';
 import './ProductDetail.css';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -7,13 +7,13 @@ import Footer from '../../components/Footer/Footer';
 const ProductDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [product, setProduct] = useState<any>(null);
-    const [colors, setColors] = useState<string[]>([]); // Danh sách màu sắc
-    const [selectedColor, setSelectedColor] = useState<string>(''); // Màu được chọn
+    const [colors, setColors] = useState<string[]>([]);
+    const [sizes, setSizes] = useState<string[]>([]); // Danh sách kích cỡ
+    const [selectedColor, setSelectedColor] = useState<string>('');
+    const [selectedSize, setSelectedSize] = useState<string>(''); // Kích cỡ được chọn
     const [quantity, setQuantity] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-
-    const navigate = useNavigate(); // Hook useNavigate
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -24,9 +24,12 @@ const ProductDetail: React.FC = () => {
                 const data = await response.json();
                 setProduct(data);
 
-                const availableColors = data.color.split(','); 
+                const availableColors = data.color.split(',');
+                const availableSizes = data.size.split(','); // Lấy danh sách kích cỡ
                 setColors(availableColors);
-                setSelectedColor(availableColors[0]); 
+                setSizes(availableSizes);
+                setSelectedColor(availableColors[0]); // Mặc định chọn màu đầu tiên
+                setSelectedSize(availableSizes[0]); // Mặc định chọn kích cỡ đầu tiên
             } catch (err) {
                 setError((err as Error).message);
             } finally {
@@ -43,43 +46,43 @@ const ProductDetail: React.FC = () => {
     };
 
     const handleAddToCart = () => {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
-    
-      if (!user.UserID) {
-        alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
-        return;
-      }
-    
-      const carts = JSON.parse(localStorage.getItem('carts') || '{}');
-      const userCart = carts[user.UserID] || [];
-    
-      const existingProductIndex = userCart.findIndex(
-        (item: any) => item.id === product.id && item.color === selectedColor
-      );
-    
-      if (existingProductIndex > -1) {
-        userCart[existingProductIndex].quantity += quantity;
-      } else {
-        userCart.push({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          quantity,
-          color: selectedColor,
-        });
-      }
-    
-      carts[user.UserID] = userCart;
-      localStorage.setItem('carts', JSON.stringify(carts));
-    
-      alert('Sản phẩm đã được thêm vào giỏ hàng!');
-    
-      // Điều hướng đến trang giỏ hàng (nếu cần)
-      // navigate('/cart');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+        if (!user.UserID) {
+            alert('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!');
+            return;
+        }
+
+        const carts = JSON.parse(localStorage.getItem('carts') || '{}');
+        const userCart = carts[user.UserID] || [];
+
+        const existingProductIndex = userCart.findIndex(
+            (item: any) =>
+                item.id === product.id &&
+                item.color === selectedColor &&
+                item.size === selectedSize
+        );
+
+        if (existingProductIndex > -1) {
+            userCart[existingProductIndex].quantity += quantity;
+        } else {
+            userCart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                quantity,
+                color: selectedColor,
+                size: selectedSize, // Lưu kích cỡ được chọn
+            });
+        }
+
+        carts[user.UserID] = userCart;
+        localStorage.setItem('carts', JSON.stringify(carts));
+
+        alert('Sản phẩm đã được thêm vào giỏ hàng!');
     };
-    
-    
+
     if (loading) return <p>Đang tải...</p>;
     if (error) return <p>Lỗi: {error}</p>;
     if (!product) return <p>Không tìm thấy sản phẩm!</p>;
@@ -132,11 +135,25 @@ const ProductDetail: React.FC = () => {
                             ))}
                         </select>
                     </div>
+                    <div className="product-size-detail">
+                        <label htmlFor="size">Kích cỡ:</label>
+                        <select
+                            id="size"
+                            name="size"
+                            value={selectedSize}
+                            onChange={(e) => setSelectedSize(e.target.value)}
+                        >
+                            {sizes.map((size, index) => (
+                                <option key={index} value={size}>
+                                    {size}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <div className="product-buttons-detail">
                         <button className="add-to-cart" onClick={handleAddToCart}>
                             Thêm vào giỏ hàng
                         </button>
-                        <button className="buy-now">Mua ngay</button>
                     </div>
                 </div>
             </div>

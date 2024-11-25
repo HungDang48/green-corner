@@ -20,6 +20,9 @@ const HeaderAdmin = () => {
     const handleUserAccountAdminClick = () => {
         navigate('/UserAccountAdmin');
     };
+    const handleOrderAdminClick = () => {
+        navigate('/OrderAdmin');
+    };
     return (
         <div>
             
@@ -27,12 +30,12 @@ const HeaderAdmin = () => {
                 <div className="navbar">
                     <div className="navbar-left">
                         <div className="logo">
-                            <img
+                            {/* <img
                                 alt="Logo"
                                 height="40"
                                 src="https://storage.googleapis.com/a1aa/image/EJvSbSOCeZSXWiA1BgH9OER9w3xnREn9eqoHoxq5AL3jv4tTA.jpg"
                                 width="40"
-                            />
+                            /> */}
                             <span>SHOPPING WELL</span>
                         </div>
                         <div className="search-bar">
@@ -46,8 +49,8 @@ const HeaderAdmin = () => {
                             <a href="#">
                                 <i className="fas fa-cogs"></i>ADMIN
                             </a>
-                            <a href="#">
-                                <i className="fas fa-th-large"></i>THANH TOÁN
+                            <a href="#"onClick={handleOrderAdminClick}>
+                                <i ></i>ĐƠN HÀNG
                             </a>
                             <a href="#" onClick={handleProductAdminClick}>SẢN PHẨM</a>
                             <a href="#">
