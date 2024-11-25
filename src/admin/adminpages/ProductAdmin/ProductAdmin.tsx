@@ -19,6 +19,7 @@ export interface Product {
     createdAt: number;
     updatedAt: number;
     image: string;
+    gendersID : string;
 }
 
 interface Category {
@@ -60,8 +61,8 @@ const ProductAdmin = () => {
             productname: '',
             categoriesID: '',
             gendersID: '',
-            newSaleID: '',
-            hotSaleID: '',
+            newSaleID: false,
+            hotSaleID: false,
             size: '',
             color: '',
             price: '',
@@ -69,23 +70,6 @@ const ProductAdmin = () => {
 
 
     });
-
-
-    const UpdateAccount = ({ }) => {
-        const [formData, setFormData] = useState({
-            productId: '',
-            productname: '',
-            categoriesID: '',
-            gendersID: '',
-            newSaleID: '',
-            hotSaleID: '',
-            size: '',
-            color: '',
-            price: '',
-            image: '',
-
-        });
-    }
 
 
 
@@ -109,8 +93,23 @@ const ProductAdmin = () => {
         setShowPopupUpdate(!showPopupUpdate);
     };
     const onUpdate = ( productId: number) => {
-        setProductId( productId);
-        togglePopupUpdate();
+        const product =  currentProducts?.find(item => Number(item.productId) === productId)
+        if (product) {
+            setProductId(product.id);
+            togglePopupUpdate();
+            setFormData({
+                productId: product.productId,
+                productname: product.name,
+                categoriesID: String(product.categoriesID),
+                gendersID: String(product.gendersID),
+                newSaleID: product.newSaleID,
+                hotSaleID: product.hotSaleID,
+                size: product.size,
+                color: product.color,
+                price: String(product.price),
+                image: product.image,
+            })
+        }
     };
     const onCancel = () => {
         setProductId(null);
@@ -222,14 +221,15 @@ const ProductAdmin = () => {
 
         try {
             // Gửi PATCH request đến API
-            await axios.patch(`http://localhost:5000/User/${productId}`, {
+            await axios.patch(`http://localhost:5000/products/${productId}`, {
                 id: productId,
                 name: formData.productname || '',
                 categoriesID: Number(formData.categoriesID) || '',
                 gendersID: Number(formData.gendersID) || '',
-                newSaleID: formData.newSaleID === 'true' || '',
-                hotSaleID: formData.hotSaleID === 'true' || '',
+                newSaleID: formData.newSaleID ,
+                hotSaleID: formData.hotSaleID ,
                 size: formData.size || '',
+                price: formData.price,
                
             });
             alert('Cập nhật thông tin thành công!');
@@ -440,7 +440,7 @@ const ProductAdmin = () => {
                                                 >
                                                     <div className="popup-form-container">
                                                         <h2>UPDATE SẢN PHẨM </h2>
-                                                        <form className="product-form">
+                                                        <form  className="product-form" onSubmit={handleSubmitUpdate}>
                                                             <label htmlFor="imageUrl">Liên kết hình ảnh:</label>
                                                             <input
                                                                 type="url"
@@ -503,7 +503,7 @@ const ProductAdmin = () => {
                                                                 <input type="number" name="price" value={formData.price} onChange={handleInputChangeUpdate} required />
                                                             </label>
                                                             <div className="popup-buttons">
-                                                                <button type="button" className="submit-button" >
+                                                                <button type="submit" className="submit-button" >
                                                                     UPDATE SẢN PHẨM
                                                                 </button>
                                                                 <button type="button" className="cancel-button" onClick={togglePopup}>
