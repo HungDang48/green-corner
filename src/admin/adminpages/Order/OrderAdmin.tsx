@@ -1,8 +1,9 @@
+// Ensure Modal has open and onClose props
 import React, { useEffect, useState } from "react";
 import HeaderAdmin from "../../component/headerAdmin/HeaderAdmin";
-import "./OrdeAdmin.css";
+import Modal from '../../component/modal'; // Import Modal component
+import './OrdeAdmin.css'
 
-// Các interface đã được định nghĩa sẵn
 export interface Product {
   productId: string;
   name: string;
@@ -41,9 +42,10 @@ const OrderAdmin = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [newStatus, setNewStatus] = useState("");
   const itemsPerPage = 5;
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+  const [orderID, setOrderID] = useState<number | null>(null);
 
   useEffect(() => {
-    // Gọi API để lấy danh sách đơn hàng
     fetch("http://localhost:5000/Orders")
       .then((response) => {
         if (!response.ok) {
@@ -61,11 +63,9 @@ const OrderAdmin = () => {
       });
   }, []);
 
-  // Tính toán các mục trên trang hiện tại
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentOrders = orders.slice(indexOfFirstItem, indexOfLastItem);
-
   const totalPages = Math.ceil(orders.length / itemsPerPage);
 
   const handlePrevPage = () => {
@@ -76,40 +76,61 @@ const OrderAdmin = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
-  const handleStatusChange = (order: Order) => {
-    setSelectedOrder(order);
-    setNewStatus(order.orderStatus);
+  const onUpdate = (orderID: number) => {
+    setOrderID(orderID);
+    togglePopup1();
   };
 
-  const handleUpdateStatus = () => {
+  const onCancel = () => {
+    setOrderID(null);
+    togglePopup1();
+  };
+
+  const handleStatusChange = (order: Order) => {
+    setSelectedOrder(order); // Gán đơn hàng được chọn
+    setNewStatus(order.orderStatus); // Gán trạng thái hiện tại vào dropdown
+    togglePopup1(); // Mở popup
+  };
+
+  const togglePopup1 = () => {
+    setIsEditPopupOpen(!isEditPopupOpen);
+  };
+
+  const handleUpdateStatus = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!selectedOrder) return;
 
-    // Cập nhật trạng thái đơn hàng
+    setLoading(true);
+
     fetch(`http://localhost:5000/Orders/${selectedOrder.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        orderStatus: newStatus,
-      }),
+      body: JSON.stringify({ orderStatus: newStatus }),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to update order status");
+          throw new Error("Cập nhật trạng thái thất bại.");
         }
         return response.json();
       })
-      .then((data) => {
+      .then((updatedOrder) => {
         setOrders((prevOrders) =>
           prevOrders.map((order) =>
-            order.id === data.id ? { ...order, orderStatus: data.orderStatus } : order
+            order.id === updatedOrder.id
+              ? { ...order, orderStatus: updatedOrder.orderStatus }
+              : order
           )
         );
-        setSelectedOrder(null); // Đóng popup
+        setSelectedOrder(null);
+        togglePopup1();
       })
       .catch((error) => {
         setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -185,8 +206,11 @@ const OrderAdmin = () => {
                 <td>{order.courier}</td>
                 <td>{order.totalAmount ? order.totalAmount.toLocaleString() + " VND" : "N/A"}</td>
                 <td>
-                  <button className="edit-order-button" onClick={() => handleStatusChange(order)}>
-                    Cập Nhật Trạng Thái
+                  <button
+                    className="user-account-button-new-account"
+                    onClick={() => handleStatusChange(order)}
+                  >
+                    Cập nhật trạng thái
                   </button>
                 </td>
               </tr>
@@ -204,24 +228,31 @@ const OrderAdmin = () => {
           </button>
         </div>
 
-        {/* Popup Cập Nhật Trạng Thái */}
-        {selectedOrder && (
-          <div className="modal">
-            <div className="modal-content">
-              <h3>Cập Nhật Trạng Thái Đơn Hàng</h3>
-              <select
-                value={newStatus}
-                onChange={(e) => setNewStatus(e.target.value)}
-              >
-                <option value="Pending">Pending</option>
-                <option value="Confirmed">Confirmed</option>
-                <option value="In Transit">In Transit</option>
-                <option value="Delivered">Delivered</option>
-              </select>
-              <button onClick={handleUpdateStatus}>Cập Nhật</button>
-              <button onClick={() => setSelectedOrder(null)}>Đóng</button>
-            </div>
-          </div>
+        {/* Modal Popup for status update */}
+        {isEditPopupOpen && selectedOrder && (
+          <Modal open={isEditPopupOpen} onClose={togglePopup1}>
+            <h3>Cập nhật trạng thái đơn hàng</h3>
+            <form onSubmit={handleUpdateStatus}>
+              <div>
+                <label htmlFor="status">Trạng thái mới</label>
+                <select
+                  id="status"
+                  value={newStatus}
+                  onChange={(e) => setNewStatus(e.target.value)}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Canceled">Canceled</option>
+                </select>
+              </div>
+              <div className="button-modal">
+                <br></br>
+                <button className="button-submit" type="submit">Cập nhật</button>
+               
+              </div>
+            </form>
+          </Modal>
         )}
       </div>
     </div>

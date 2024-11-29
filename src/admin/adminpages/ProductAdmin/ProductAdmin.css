@@ -22,16 +22,34 @@
     font-weight: bold;
 }
 
-.product-admin-button-new-button {
-   
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+/* Nút "Thêm sản phẩm mới" */
+.product-admin-button-new-product {
+    background-color: #4CAF50; /* Màu xanh lá cây */
+    color: white; /* Màu chữ trắng */
+    padding: 12px 20px; /* Khoảng cách bên trong */
+    border: none; /* Không có viền */
+    border-radius: 4px; /* Bo góc */
+    font-size: 16px; /* Cỡ chữ */
+    cursor: pointer; /* Con trỏ chuột dạng tay */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu và phóng to khi hover */
+  }
+  
+  /* Hiệu ứng khi di chuột vào nút */
+  .product-admin-button-new-product:hover {
+    background-color: #d81e46; /* Màu xanh lá cây đậm khi hover */
+    transform: scale(1.05); /* Phóng to một chút khi hover */
+  }
+  
+  /* Hiệu ứng khi nút được bấm (active) */
+  .product-admin-button-new-product:active {
+    background-color: #388e3c; /* Màu xanh đậm hơn khi bấm */
+    transform: scale(1); /* Khôi phục kích thước ban đầu khi bấm */
+  }
+  
+  .product-admin-button-new-product:focus {
+    outline: none; /* Loại bỏ viền khi focus */
+  }
+  
 
 .product-admin-button-new-button:hover {
     background-color: #0056b3;
@@ -103,14 +121,35 @@
     background-color: #218838;
 }
 
-.action-buttons .red {
-    background-color: #dc3545;
-    color: white;
-}
-
-.action-buttons .red:hover {
-    background-color: #c82333;
-}
+/* Nút "Xóa Bỏ" */
+.red {
+    margin-left: 20px;
+    background-color: #f44336; /* Màu đỏ */
+    color: white; /* Chữ màu trắng */
+    padding: 8px 20px; /* Tăng kích thước nút */
+    font-size: 18px; /* Cỡ chữ lớn hơn */
+    border: none; /* Không có viền */
+    border-radius: 5px; /* Bo góc */
+    cursor: pointer; /* Con trỏ chuột dạng tay */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu và phóng to khi hover */
+  }
+  
+  /* Hiệu ứng khi di chuột vào nút */
+  .red:hover {
+    background-color: #d32f2f; /* Màu đỏ đậm khi hover */
+    transform: scale(1.1); /* Phóng to một chút khi hover */
+  }
+  
+  /* Hiệu ứng khi nút được bấm (active) */
+  .red:active {
+    background-color: #c62828; /* Màu đỏ khi bấm */
+    transform: scale(1); /* Khôi phục kích thước khi bấm */
+  }
+  
+  .red:focus {
+    outline: none; /* Loại bỏ viền khi focus */
+  }
+  
 
 /* Phân trang */
 .pagination {

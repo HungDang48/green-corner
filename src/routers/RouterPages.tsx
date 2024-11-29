@@ -20,6 +20,7 @@ import UniProduct from '../components/UniProduct/UniProduct';
 import CheckOut from '../pages/CheckOut/CheckOut';
 import OrderAdmin from '../admin/adminpages/Order/OrderAdmin';
 import OrderStatus from '../pages/OrderStatus/OrderStatus';
+import AdminAccount from '../admin/adminpages/AdminAccount/AdminAccount';
 
 const RouterPages = () => {
   return (
@@ -47,6 +48,7 @@ const RouterPages = () => {
       <Route path="/uniproduct" element={<UniProduct />} />
       <Route path="/OrderAdmin" element={<OrderAdmin />} />
       <Route path="/OrderStatus" element={<OrderStatus />} />
+      <Route path="/AdminAccount" element={<AdminAccount />} />
    
 
     </Routes>

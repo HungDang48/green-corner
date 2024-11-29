@@ -1,0 +1,74 @@
+/* Định dạng tổng thể cho container */
+.loginAdmin-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Tiêu đề */
+.loginAdmin-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Định dạng form nhóm */
+.form-group-Admin {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+/* Nhãn (label) */
+.form-group-Admin label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* Input */
+.form-group-Admin input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-group-Admin input:focus {
+  border-color: #007bff;
+}
+
+/* Nút đăng nhập */
+button[type="submit"] {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Thông báo lỗi */
+.error-message {
+  margin-top: 10px;
+  color: #ff0000;
+  font-size: 14px;
+  font-weight: bold;
+}

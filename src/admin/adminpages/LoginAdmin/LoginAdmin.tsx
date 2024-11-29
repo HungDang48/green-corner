@@ -39,10 +39,10 @@ const LoginAdmin = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="loginAdmin-container">
       <h2>ADMIN LOGIN</h2>
       <form onSubmit={handleLogin}>
-        <div className="form-group">
+        <div className="form-group-Admin">
           <label htmlFor="email">Email:</label>
           <input
             type="text"
@@ -53,7 +53,7 @@ const LoginAdmin = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="form-group-Admin">
           <label htmlFor="password">Mật khẩu:</label>
           <input
             type="password"

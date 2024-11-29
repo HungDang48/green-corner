@@ -20,6 +20,10 @@ const HeaderAdmin = () => {
     const handleUserAccountAdminClick = () => {
         navigate('/UserAccountAdmin');
     };
+    const handleAdminAccountAClick = () => {
+        navigate('/AdminAccount');
+    };
+    
     const handleOrderAdminClick = () => {
         navigate('/OrderAdmin');
     };
@@ -46,9 +50,9 @@ const HeaderAdmin = () => {
                                 <i className="fas fa-home"></i>DASHBOARD
                             </a>
                             <a href="#" onClick={handleUserAccountAdminClick}>KHÁCH HÀNG</a>
-                            <a href="#">
-                                <i className="fas fa-cogs"></i>ADMIN
-                            </a>
+                            
+                            <a href="#" onClick={handleAdminAccountAClick}>ADMIN</a>
+                             
                             <a href="#"onClick={handleOrderAdminClick}>
                                 <i ></i>ĐƠN HÀNG
                             </a>
