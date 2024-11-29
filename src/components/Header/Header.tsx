@@ -45,8 +45,15 @@ const Header = () => {
     navigate('/LoginAdmin');
   };
   const handleHomeAdminClick = () => {
-    navigate('/HomepageAdmin');
+    if (isLoggedIn) {
+      // Nếu đã đăng nhập, cho phép vào trang Admin
+      navigate('/HomepageAdmin');
+    } else {
+      // Nếu chưa đăng nhập, điều hướng đến trang đăng nhập Admin
+      navigate('/LoginAdmin');
+    }
   };
+  
   const handleMaleClick = () => {
     navigate('/MaleProduct');
   };
@@ -58,6 +65,9 @@ const Header = () => {
   };
   const handleCartClick = () => {
     navigate('/Cart');
+  };
+  const handleOrderStatusClick = () => {
+    navigate('/OrderStatus');
   };
 
   const handleLogoutClick = () => {
@@ -86,7 +96,8 @@ const Header = () => {
             <a href="#">COOLXPRINT</a>
           </div>
           <div>
-            <a href="#" onClick={handleHomeAdminClick}>TRANG ADMIN</a>
+          <a href="#" onClick={handleHomeAdminClick}>TRANG ADMIN</a>
+
             <a href="#">Blog</a>
             <a href="#">Về Shopping Well</a>
             <a href="#">Trung tâm CSKH</a>
@@ -116,7 +127,7 @@ const Header = () => {
                   <span className="icon user-icon">👤
                     <div className="user-menu">
                       <a href="#" onClick={handleUserAccountClick}>thông tin cá nhân</a>
-                      <a href="#">Đơn hàng</a>
+                      <a href="#" onClick={handleOrderStatusClick}>Đơn Hàng</a>
                       <a href="#" onClick={handleLogoutClick}>Đăng xuất</a>
                     </div>
                   </span>

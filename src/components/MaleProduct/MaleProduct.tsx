@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './styleMaleProduct.css';
 import axios from 'axios';
-import Header from '../Header/Header';
-import Banner from '../Banner/Banner';
 import { Link } from 'react-router-dom';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import Banner from '../Banner/Banner';
 
 export interface Product {
     id: string;
     name: string;
     createdAt: number;
     updatedAt: number;
-    categoryId: number;
+    categoriesID: number;
     gendersID: number;
     size: string;
     color: string;
@@ -23,26 +24,42 @@ const MaleProduct: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const productsPerPage = 9;
-    const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+    const productsPerPage = 8;
+
+    // Lấy danh sách tất cả sản phẩm ban đầu
+    const fetchProducts = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get<Product[]>('http://localhost:5000/products');
+            const filteredProducts = response.data.filter(product => product.gendersID === 1);
+            setProducts(filteredProducts);
+        } catch (error) {
+            setError(error as Error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Lấy sản phẩm theo danh mục
+    const fetchProductsByCategory = async (categoriesID: number) => {
+        try {
+            setLoading(true);
+            const response = await axios.get<Product[]>('http://localhost:5000/products');
+            const filteredProducts = response.data.filter(
+                product => product.categoriesID === categoriesID && product.gendersID === 1
+            );
+            setProducts(filteredProducts);
+            setCurrentPage(1); // Reset trang về 1 khi lọc sản phẩm
+        } catch (error) {
+            setError(error as Error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get<Product[]>('http://localhost:5000/products');
-                const filteredProducts = response.data.filter(product => product.gendersID === 1 &&
-                    (!selectedCategoryId || product.categoryId === selectedCategoryId));
-                setProducts(filteredProducts);
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchProducts();
-    }, [selectedCategoryId]);
+    }, []);
 
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -50,27 +67,21 @@ const MaleProduct: React.FC = () => {
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-    const handleCategoryClick = (categoryId: number | null) => {
-        setSelectedCategoryId(categoryId);
-        setCurrentPage(1);
-    };
-
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
-
     return (
         <div>
-            <Header />
-            <Banner />
+          
+            
             <div className="container-product">
                 <body>
                     <div className="nav">
                         <div className="header">
                             NAM
-                            <a href="#" onClick={() => handleCategoryClick(2)}>SƠ MI</a>
-                            <a href="#" onClick={() => handleCategoryClick(3)}>ÁO VEST</a>
-                            <a href="#" onClick={() => handleCategoryClick(4)}>POLO</a>
-                            <a href="#" onClick={() => handleCategoryClick(5)}>ÁO NỈ</a>
+                            <button type="button" onClick={() => fetchProductsByCategory(1)}>SƠ MI</button>
+                            <button type="button" onClick={() => fetchProductsByCategory(3)}>ÁO VEST</button>
+                            <button type="button" onClick={() => fetchProductsByCategory(5)}>POLO</button>
+                            <button type="button" onClick={() => fetchProductsByCategory(7)}>ÁO NỈ</button>
                         </div>
                     </div>
                     <div className="product-grid">
@@ -80,11 +91,14 @@ const MaleProduct: React.FC = () => {
                                 <Link to={`/productdetail/${product.id}`}>
                                     <img alt={product.name} height="400" src={product.image} width="300" />
                                     <div className="product-title">{product.name}</div>
-                                    <div className="product-price">{product.price} VND</div>
+                                    <div className="product-price">
+                                        {product.price.toLocaleString('vi-VN')} VND
+                                    </div>
                                 </Link>
                             </div>
                         ))}
                     </div>
+
                     <div className="pagination">
                         <button
                             className="BTN-pagination"
@@ -104,8 +118,9 @@ const MaleProduct: React.FC = () => {
                     </div>
                 </body>
             </div>
+            
         </div>
     );
-}
+};
 
 export default MaleProduct;

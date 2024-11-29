@@ -140,7 +140,7 @@ const Cart = () => {
                   </div>
 
                   <div className="cart-item-price">
-                    {item.price} VND
+                    {item.price.toLocaleString('vi-VN')} VND
                   </div>
 
                   <div className="cart-item-action">
@@ -155,19 +155,15 @@ const Cart = () => {
                 <div className="summary">
                   <div className="summary-item">
                     <h4>Tổng tiền hàng:</h4>
-                    <p>{calculateCartTotal()} VND</p>
-                  </div>
-                  <div className="summary-item">
-                    <h4>Giảm giá:</h4>
-                    <p>- 0đ</p>
+                    <p>{calculateCartTotal().toLocaleString('vi-VN')} VND</p>
                   </div>
                   <div className="summary-item">
                     <h4>Tạm tính:</h4>
-                    <p>{calculateCartTotal()} VND</p>
+                    <p>{calculateCartTotal().toLocaleString('vi-VN')} VND</p>
                   </div>
                   <div className="summary-item summary-total">
                     <h4>Tổng tiền:</h4>
-                    <p>{calculateCartTotal()} VND</p>
+                    <p>{calculateCartTotal().toLocaleString('vi-VN')} VND</p>
                   </div>
                   <button className="checkout" onClick={handleCheckOutClick}>
                     TIẾN HÀNH ĐẶT HÀNG

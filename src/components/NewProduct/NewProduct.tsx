@@ -9,7 +9,7 @@ export interface Product {
     updatedAt: number;
     categoryId: number;
     gendersID: number;
-    newSaleID: number;
+    newSaleID: boolean;
     hotSaleID: number;
     size: string;
     color: string;
@@ -29,7 +29,7 @@ const NewProduct: React.FC = () => {
             try {
                 setLoading(true);
                 const response = await axios.get<Product[]>('http://localhost:5000/products');
-                const filteredProducts = response.data.filter(product => product.newSaleID === 1);
+                const filteredProducts = response.data.filter(product => product.newSaleID === true);
                 setProducts(filteredProducts);
             } catch (error) {
                 setError(error as Error);
@@ -65,7 +65,7 @@ const NewProduct: React.FC = () => {
                             {product.name}
                         </div>
                         <div className="product-price">
-                            {product.price} VND
+                        {product.price.toLocaleString('vi-VN')} VND
                         </div>
                     </div>
                 ))}

@@ -19,6 +19,7 @@ import HotSaleProduct from '../components/HotsaleProduct/HotSaleProduct';
 import UniProduct from '../components/UniProduct/UniProduct';
 import CheckOut from '../pages/CheckOut/CheckOut';
 import OrderAdmin from '../admin/adminpages/Order/OrderAdmin';
+import OrderStatus from '../pages/OrderStatus/OrderStatus';
 
 const RouterPages = () => {
   return (
@@ -29,8 +30,8 @@ const RouterPages = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/homepage" element={<Homepage />} />
-      <Route path="/loginadmin" element={<LoginAdmin />} />
-      <Route path="/homepageadmin" element={<HomepageAdmin />} />
+      <Route path="/LoginAdmin" element={<LoginAdmin />} />
+      <Route path="/HomepageAdmin" element={<HomepageAdmin />} />
       <Route path="/useraccount" element={<UserAccount />} />
       <Route path="/ProductAdmin" element={<ProductAdmin />} />
       
@@ -45,6 +46,7 @@ const RouterPages = () => {
       <Route path="/hotsale" element={<HotSaleProduct />} />
       <Route path="/uniproduct" element={<UniProduct />} />
       <Route path="/OrderAdmin" element={<OrderAdmin />} />
+      <Route path="/OrderStatus" element={<OrderStatus />} />
    
 
     </Routes>

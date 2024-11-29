@@ -1,19 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './LoginAdmin.css';
 
 const LoginAdmin = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate(); // Sử dụng useNavigate để điều hướng
+
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setErrorMessage(''); // Xóa thông báo lỗi trước đó
+
+    try {
+      // Gọi API để lấy danh sách admin
+      const response = await axios.get('http://localhost:5000/Admins');
+      const admins = response.data;
+
+      // Tìm admin có email và password khớp
+      const matchedAdmin = admins.find(
+        (admin: any) => admin.email === email && admin.password === password
+      );
+
+      if (matchedAdmin) {
+        // Đăng nhập thành công
+        localStorage.setItem('admin', JSON.stringify(matchedAdmin)); // Lưu thông tin admin vào localStorage
+        alert(`Chào mừng ${matchedAdmin.name}!`);
+        navigate('/HomepageAdmin'); // Điều hướng đến trang HomepageAdmin
+      } else {
+        // Đăng nhập thất bại
+        setErrorMessage('Tên đăng nhập hoặc mật khẩu không đúng.');
+      }
+    } catch (error) {
+      console.error('Lỗi khi gọi API:', error);
+      setErrorMessage('Có lỗi xảy ra. Vui lòng thử lại sau.');
+    }
+  };
+
   return (
     <div className="login-container">
-      <h2>ADMIN</h2>
-      <form>
+      <h2>ADMIN LOGIN</h2>
+      <form onSubmit={handleLogin}>
         <div className="form-group">
-          <label htmlFor="username">Tên đăng nhập:</label>
-          <input type="text" id="username" name="username" required />
+          <label htmlFor="email">Email:</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
         <div className="form-group">
           <label htmlFor="password">Mật khẩu:</label>
-          <input type="password" id="password" name="password" required />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit">Đăng nhập</button>
       </form>
     </div>

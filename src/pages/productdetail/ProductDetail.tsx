@@ -96,7 +96,7 @@ const ProductDetail: React.FC = () => {
                 </div>
                 <div className="product-info-detail">
                     <h1 className="product-name-detail">{product.name}</h1>
-                    <p className="product-price-detail">Giá: {product.price} VND</p>
+                    <p className="product-price-detail">Giá:  {product.price.toLocaleString('vi-VN')} VND </p>
                     <div className="product-quantity-detail">
                         <label>Số lượng:</label>
                         <div className="quantity-controls">

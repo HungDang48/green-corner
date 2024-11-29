@@ -11,7 +11,7 @@ export interface Product {
     categoryId: number;
     gendersID: number;
     newSaleID: number;
-    hotSaleID: number;
+    hotSaleID: boolean;
     size: string;
     color: string;
     price: number;
@@ -31,7 +31,7 @@ const HotSaleProduct: React.FC = () => {
             try {
                 setLoading(true);
                 const response = await axios.get<Product[]>('http://localhost:5000/products');
-                const filteredProducts = response.data.filter(product => product.hotSaleID === 1);
+                const filteredProducts = response.data.filter(product => product.hotSaleID === true);
                 setProducts(filteredProducts);
             } catch (error) {
                 setError(error as Error);
@@ -73,7 +73,7 @@ const HotSaleProduct: React.FC = () => {
                             {product.name}
                         </div>
                         <div className="product-price">
-                            {product.price} VND
+                        {product.price.toLocaleString('vi-VN')} VND
                         </div>
                     </div>
                 ))}

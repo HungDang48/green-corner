@@ -27,13 +27,11 @@ color: rgb(255, 0, 0);
 }
 
 .product-grid{
-    /* border: 2px solid blue; */
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center; 
-  align-items: center;
-    /* border: 3px solid red; */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Tự điều chỉnh số cột theo kích thước màn hình */
+    gap: 20px; /* Khoảng cách giữa các sản phẩm */
+    padding: 20px;
+    background-color: #f9f9f9; /* Màu nền nhã nhặn */
 }
 .container-product{
     display: flex;
@@ -47,6 +45,10 @@ color: rgb(255, 0, 0);
 
 
 }
+.product:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Tăng độ đổ bóng khi hover */
+}
 .nav{
     padding: 20px;
     margin-bottom: 0px;
@@ -58,6 +60,7 @@ color: rgb(255, 0, 0);
    
   
 }
+
 .nav a {
     margin: 30px 15px;
     margin-left: 100px;
@@ -74,28 +77,33 @@ color: rgb(255, 0, 0);
         
 }
 .product {
-    margin: 20px;
-    text-align: center;
-   border: 3px solid black;
-    /* background-color:rgb(227, 228, 235); */
-    width: 370px;
-    border-radius: 5px;
-    display: inline-block;
-    border: 1px solid #ccc;
-    font-size: 20px;
+    background: #fff; /* Nền trắng */
+    border: 1px solid #ddd; /* Đường viền nhẹ */
+    border-radius: 8px; /* Góc bo tròn */
+    overflow: hidden; /* Đảm bảo hình ảnh và nội dung không tràn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng mềm mại */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng hover */
             
 }
 
 .product-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #333;
-    margin-top: 10px;
-    text-align: center;
-  }
-.product-price {
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: black;
-    margin-top: 10px;
+    color: #333;
+    margin: 10px 0;
+    text-align: center;
+}
+.product-price {
+    font-size: 1rem;
+    color: #ff5722; /* Màu cam nổi bật */
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+.product a {
+    text-decoration: none; /* Loại bỏ gạch chân */
+    color: inherit; /* Màu sắc thừa kế */
+}
+.product a:hover .product-title {
+    color: #007bff; /* Đổi màu tiêu đề khi hover vào sản phẩm */
 }

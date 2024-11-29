@@ -24,8 +24,8 @@ const Homepage = () => {
       <Header />
       <Banner  />
       <UniProduct />
-      {/* <MaleProduct />
-      <FemaleProduct /> */}
+      <MaleProduct />
+      <FemaleProduct />
       <NewProduct />
       <HotSaleProduct />
       {/* <ProductDetail /> */}

@@ -14,6 +14,35 @@ body {
     /* border: 3px solid aqua; */
    
 }
+/* Style cho header */
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+   
+    font-weight: bold;
+  }
+  
+  /* Style cho các nút */
+  .header button {
+    border: #ccc;
+    width: 200px;
+    background: transparent; /* Nền trong suốt */
+    color: #000; /* Màu chữ đen */
+    padding: 10px 20px; /* Khoảng cách giữa chữ và viền */
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Hiệu ứng chuyển động mượt mà */
+    outline: none; /* Xóa viền khi nút được chọn */
+  }
+  
+  /* Style khi hover chuột vào nút */
+  .header button:hover {
+    background-color: #000; /* Thay đổi nền thành màu đen khi hover */
+    color: #fff; /* Chữ màu trắng khi hover */
+    border-color: #ffffff; /* Viền màu trắng khi hover */
+  }
+  
 .header-low {
     font-size: 25px;
     font-weight: bolder;
@@ -99,4 +128,13 @@ color: rgb(255, 0, 0);
     font-weight: bold;
     color: black;
     margin-top: 10px;
+}
+.filter-button {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
 }

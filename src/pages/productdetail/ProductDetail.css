@@ -1,123 +1,147 @@
 /* General styling */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-  }
-  
-  body {
-    background-color: #f4f4f4;
-  }
-  
-  /* Product detail container */
-  .product-detail {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Left side - Product Image */
-  .product-image-detail {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-right: 20px;
-  }
-  
-  .product-image-detail img {
-    max-width: 100%;
-    max-height: 400px;
-    border-radius: 10px;
-  }
-  
-  /* Right side - Product Info */
-  .product-info-detail {
-    flex: 1;
-    padding-left: 20px;
-  }
-  
-  .product-name-detail {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #333;
-  }
-  
-  .product-price-detail {
-    font-size: 22px;
-    color: #d9534f;
-    margin-bottom: 25px;
-  }
-  
-  .product-quantity-detail,
-  .product-color-detail {
-    margin-bottom: 20px;
-  }
-  
-  .product-quantity-detail label,
-  .product-color-detail label {
-    font-size: 16px;
-    font-weight: 500;
-    margin-right: 10px;
-  }
-  
-  .product-quantity-detail input {
-    width: 60px;
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-align: center;
-  }
-  
-  .product-color-detail select {
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .product-buttons-detail {
-    display: flex;
-    gap: 15px;
-    margin-top: 30px;
-  }
-  
-  .product-buttons-detail button {
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* Button styles */
-  .add-to-cart {
-    background-color: #28a745;
-    color: #fff;
-  }
-  
-  .add-to-cart:hover {
-    background-color: #218838;
-  }
-  
-  .buy-now {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .buy-now:hover {
-    background-color: #0069d9;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+}
+
+/* Product detail container */
+.product-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Left side - Product Image */
+.product-image-detail {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 20px;
+}
+
+.product-image-detail img {
+  max-width: 100%; /* Đảm bảo ảnh chiếm hết chiều rộng nhưng không vượt quá kích thước của container */
+  max-height: 400px; /* Giữ chiều cao tối đa như cũ */
+  border-radius: 10px;
+}
+
+/* Right side - Product Info */
+.product-info-detail {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.product-name-detail {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.product-price-detail {
+  font-size: 22px;
+  color: #d9534f;
+  margin-bottom: 25px;
+}
+
+.product-quantity-detail,
+.product-color-detail {
+  margin-bottom: 20px;
+}
+
+.product-quantity-detail label,
+.product-color-detail label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.product-quantity-detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-quantity-detail input {
+  width: 60px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  transition: border-color 0.3s ease;
+}
+
+.product-quantity-detail button {
+  background-color: #333; /* Black button */
+  color: #fff;
+  padding: 10px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for quantity buttons */
+.product-quantity-detail button:hover {
+  background-color: #555; /* Darker black on hover */
+}
+
+/* Product color select */
+.product-color-detail select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Button styling and hover effects */
+.product-buttons-detail {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.product-buttons-detail button {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button styles */
+.add-to-cart {
+  background-color: #333; /* Black button */
+  color: #fff;
+}
+
+.add-to-cart:hover {
+  background-color: #555; /* Darker black on hover */
+}
+
+.buy-now {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.buy-now:hover {
+  background-color: #0069d9;
+}

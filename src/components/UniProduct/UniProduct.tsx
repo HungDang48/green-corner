@@ -8,7 +8,7 @@ export interface Product {
     name: string;
     createdAt: number;
     updatedAt: number;
-    categoryId: number;
+    categoriesID: number;
     gendersID: number;
     size: string;
     color: string;
@@ -21,22 +21,40 @@ const UniProduct: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const productsPerPage = 10;
+    const productsPerPage = 8;
+
+    // Lấy danh sách tất cả sản phẩm ban đầu
+    const fetchProducts = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get<Product[]>('http://localhost:5000/products');
+            const filteredProducts = response.data.filter(product => product.gendersID === 3);
+            setProducts(filteredProducts);
+        } catch (error) {
+            setError(error as Error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Lấy sản phẩm theo danh mục
+    const fetchProductsByCategory = async (categoriesID: number) => {
+        try {
+            setLoading(true);
+            const response = await axios.get<Product[]>('http://localhost:5000/products');
+            const filteredProducts = response.data.filter(
+                product => product.categoriesID === categoriesID && product.gendersID === 3
+            );
+            setProducts(filteredProducts);
+            setCurrentPage(1); // Reset trang về 1 khi lọc sản phẩm
+        } catch (error) {
+            setError(error as Error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get<Product[]>('http://localhost:5000/products');
-                const filteredProducts = response.data.filter(product => product.gendersID === 3);
-                setProducts(filteredProducts);
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchProducts();
     }, []);
 
@@ -48,7 +66,6 @@ const UniProduct: React.FC = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
-
     return (
         <div>
             <div className="container-product">
@@ -56,24 +73,27 @@ const UniProduct: React.FC = () => {
                     <div className="nav">
                         <div className="header">
                             UNISEX
-                            <a href="#">T-SHIRT</a>
-                            <a href="#">QUẦN TÚI HỘP</a>
-                            <a href="#">QUẦN KAKI</a>
-                            <a href="#">ÁO KHOÁT</a>
+                            <button type="button" onClick={() => fetchProductsByCategory(9)}>T-SHIRT</button>
+                            <button type="button" onClick={() => fetchProductsByCategory(10)}>QUẦN TÚI HỘP</button>
+                            <button type="button" onClick={() => fetchProductsByCategory(11)}>QUẦN KAKI</button>
+                            <button type="button" onClick={() => fetchProductsByCategory(12)}>ÁO KHOÁC</button>
                         </div>
                     </div>
                     <div className="product-grid">
                         {currentProducts && currentProducts.map((product) => (
                             <div className="product" key={product.id}>
-                                {/* Thêm Link để dẫn tới trang chi tiết sản phẩm */}
+                                {/* Thêm Link để dẫn đến trang chi tiết sản phẩm */}
                                 <Link to={`/productdetail/${product.id}`}>
                                     <img alt={product.name} height="400" src={product.image} width="300" />
                                     <div className="product-title">{product.name}</div>
-                                    <div className="product-price">{product.price} VND</div>
+                                    <div className="product-price">
+                                        {product.price.toLocaleString('vi-VN')} VND
+                                    </div>
                                 </Link>
                             </div>
                         ))}
                     </div>
+
                     <div className="pagination">
                         <button
                             className="BTN-pagination"

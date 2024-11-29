@@ -127,6 +127,21 @@ const ProductAdmin = () => {
         }
     };
 
+    const handleDelete = async (productId: number) => {
+        try {
+            // Gửi yêu cầu DELETE đến API để xoá người dùng
+            await axios.delete(`http://localhost:5000/products/${productId}`);
+
+            // Thông báo xoá thành công
+            alert('Xoá sản phẩm thành công!');
+
+            // Cập nhật lại danh sách người dùng sau khi xoá
+            setProductsList((prevUserList) => prevUserList?.filter(Product => Product.id !== productId) || []);
+        } catch (error) {
+            console.error("Xoá sản phẩm thất bại:", error);
+            alert('Có lỗi xảy ra khi xoá sản phẩm.');
+        }
+    };
 
 
 
@@ -513,6 +528,9 @@ const ProductAdmin = () => {
                                                         </form>
                                                     </div>
                                                 </Modal>
+                                                <button className="red" onClick={() => handleDelete(products.id)}>
+                                            Xóa Bỏ
+                                        </button>
 
                                             </td>
                                         </tr>

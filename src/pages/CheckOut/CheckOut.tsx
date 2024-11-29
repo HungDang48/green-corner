@@ -17,9 +17,10 @@ const CheckOut = () => {
   const [shippingMethod, setShippingMethod] = useState('standard');
   const [paymentMethod, setPaymentMethod] = useState('cod');
   
-  const validPromoCodes: Record<'SALE10' | 'SALE20', number> = {
+  const validPromoCodes: Record<'SALE10' | 'SALE20'| 'CHEAP', number> = {
     SALE10: 10,
     SALE20: 20, 
+    CHEAP : 60
   };
 
   // Áp dụng mã giảm giá
@@ -42,19 +43,32 @@ const CheckOut = () => {
 
   // Xác nhận đơn hàng
   const handleConfirmOrder = async () => {
+    // Lấy User từ localStorage (Giả sử thông tin người dùng lưu trong localStorage với key 'user')
+    const user = JSON.parse(localStorage.getItem('user') || '{}'); // Thực hiện chuyển đổi từ chuỗi JSON thành đối tượng JavaScript
+  
+    // Kiểm tra xem User có tồn tại và có UserID không
+    if (!user.UserID) {
+      alert('Bạn cần đăng nhập trước khi đặt hàng.');
+      navigate('/login');  // Điều hướng người dùng về trang đăng nhập nếu chưa có UserID
+      return;
+    }
+  
+    // Kiểm tra xem các thông tin bắt buộc có được nhập đầy đủ không
     if (!guestName.trim() || !guestNumber.trim() || !address.trim()) {
       alert('Vui lòng nhập đầy đủ thông tin họ và tên, số điện thoại, và địa chỉ giao hàng.');
       return;
     }
   
     const shippingFee = shippingMethod === 'standard' ? 20000 : 50000;
+  
+    // Cập nhật dữ liệu đơn hàng
     const orderData = {
       OrderID: Math.floor(Math.random() * 100000),
       orderStatus: 'Pending',
       orderDate: new Date().toISOString(),
       paymentStatus: paymentMethod === 'cod' ? 'Unpaid' : 'Paid',
       paymentMethod,
-      UserID: 1,
+      UserID: user.UserID,  // Sử dụng user.UserID thay vì userID
       products: cartItems.map((item) => ({
         productId: item.id || Math.random().toString(),
         name: item.name,
@@ -97,6 +111,8 @@ const CheckOut = () => {
     }
   };
   
+  
+  
 
   return (
     <div>
@@ -133,48 +149,49 @@ const CheckOut = () => {
 
         {/* Danh sách sản phẩm */}
         <section className="product-list">
-          <h2>Giỏ Hàng Của Bạn</h2>
-          <ul>
-            {cartItems.map((item, index) => (
-              <li key={index} className="cart-item">
-                <img src={item.image} alt={item.name} />
-                <div className="cart-item-details">
-                  <p className="item-name">{item.name}</p>
-                  <p>Giá: {item.price} VND</p>
-                  <p>Số lượng: {item.quantity}</p>
-                  <p>Kích thước: {item.size || 'Không có'}</p>
-                  <p>Tổng: {item.price * item.quantity} VND</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
+  <h2>Giỏ Hàng Của Bạn</h2>
+  <ul>
+    {cartItems.map((item, index) => (
+      <li key={index} className="cart-item">
+        <img src={item.image} alt={item.name} />
+        <div className="cart-item-details">
+          <p className="item-name">{item.name}</p>
+          <p>Giá: {item.price.toLocaleString('vi-VN')} VND</p>
+          <p>Số lượng: {item.quantity}</p>
+          <p>Kích thước: {item.size || 'Không có'}</p>
+          <p>Tổng: {(item.price * item.quantity).toLocaleString('vi-VN')} VND</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>
 
-        {/* Áp dụng mã giảm giá */}
-        <section className="promo-code">
-          <h2>Mã Giảm Giá</h2>
-          <input
-            type="text"
-            placeholder="Nhập mã giảm giá"
-            value={promoCode}
-            onChange={(e) => setPromoCode(e.target.value)}
-            className="promo-input"
-          />
-          <button className="apply-btn" onClick={handleApplyPromo}>
-            Áp DụngtoLocaleString
-          </button>
-        </section>
+{/* Áp dụng mã giảm giá */}
+<section className="promo-code">
+  <h2>Mã Giảm Giá</h2>
+  <input
+    type="text"
+    placeholder="Nhập mã giảm giá"
+    value={promoCode}
+    onChange={(e) => setPromoCode(e.target.value)}
+    className="promo-input"
+  />
+  <button className="apply-btn" onClick={handleApplyPromo}>
+    Áp Dụng Mã
+  </button>
+</section>
 
-        {/* Tổng kết */}
-        <section className="order-summary">
-          <h2>Tóm Tắt Đơn Hàng</h2>
-          <p>Tổng tiền hàng: {totalPrice} VND</p>
-          <p>Phí giao hàng: {shippingMethod === 'standard' ? 20000 : 50000} VND</p>
-          <p>Giảm giá: -{discount} VND</p>
-          <h3>
-            Tổng thanh toán: {totalPrice + (shippingMethod === 'standard' ? 20000 : 50000) - discount} VND
-          </h3>
-        </section>
+{/* Tổng kết */}
+<section className="order-summary">
+  <h2>Tóm Tắt Đơn Hàng</h2>
+  <p>Tổng tiền hàng: {totalPrice.toLocaleString('vi-VN')} VND</p>
+  <p>Phí giao hàng: {(shippingMethod === 'standard' ? 20000 : 50000).toLocaleString('vi-VN')} VND</p>
+  <p>Giảm giá: -{discount.toLocaleString('vi-VN')} VND</p>
+  <h3>
+    Tổng thanh toán: {(totalPrice + (shippingMethod === 'standard' ? 20000 : 50000) - discount).toLocaleString('vi-VN')} VND
+  </h3>
+</section>
+
 
         {/* Nút xác nhận */}
         <button className="confirm-order" onClick={handleConfirmOrder}>
@@ -187,3 +204,4 @@ const CheckOut = () => {
 };
 
 export default CheckOut;
+                                                                                                                                                                                 
