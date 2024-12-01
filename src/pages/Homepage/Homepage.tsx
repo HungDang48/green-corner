@@ -26,8 +26,8 @@ const Homepage = () => {
       <UniProduct />
       <MaleProduct />
       <FemaleProduct />
-      <NewProduct />
-      <HotSaleProduct />
+      {/* <NewProduct />
+      <HotSaleProduct /> */}
       {/* <ProductDetail /> */}
       {/* <ExampleComponent /> */}
       

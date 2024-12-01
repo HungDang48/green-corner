@@ -108,7 +108,7 @@ const FemaleProduct: React.FC = () => {
         <body>
           <div className="nav">
             <div className="header">
-                <h1>NỮ</h1>
+                 NỮ 
               {categories && categories.map((category) => (
                 <button
                   key={category.id}

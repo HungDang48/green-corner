@@ -21,7 +21,6 @@ const CategoriesAdmin = () => {
         gendersID: 1,
     });
 
-
     const [isEditing, setIsEditing] = useState(false); // Kiểm tra trạng thái "update"
 
     // Hàm gọi API để lấy dữ liệu danh mục
@@ -37,7 +36,12 @@ const CategoriesAdmin = () => {
     // Hàm xử lý khi form thay đổi
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        // Ensure gendersID is a number
+        if (name === "gendersID") {
+            setFormData({ ...formData, [name]: Number(value) }); // Convert to number
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     // Hàm toggle popup
@@ -48,6 +52,7 @@ const CategoriesAdmin = () => {
             setIsEditing(false);
         }
     };
+
     // Hàm xử lý xóa danh mục
     const handleDelete = async (id: number) => {
         if (window.confirm('Bạn có chắc muốn xóa danh mục này không?')) {
@@ -65,7 +70,7 @@ const CategoriesAdmin = () => {
     // Hàm xử lý submit form tạo hoặc cập nhật danh mục
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
+
         if (isEditing) {
             // Cập nhật danh mục
             try {
@@ -83,9 +88,9 @@ const CategoriesAdmin = () => {
                 id: categories.length > 0 ? categories[categories.length - 1].id + 1 : 1, // Đặt id mới
                 name: formData.name || '',
                 categoriesID: newCategoriesID, // categoriesID mới
-                gendersID: Number(formData.gendersID) || 1, // Chuyển gendersID thành number
+                gendersID: formData.gendersID, // Đảm bảo gendersID là số
             };
-    
+
             try {
                 await axios.post('http://localhost:5000/Categories', newCategory);
                 setCategories([...categories, newCategory]);
@@ -97,9 +102,6 @@ const CategoriesAdmin = () => {
         }
         togglePopup(); // Đóng popup sau khi hoàn tất
     };
-    
-    
-
 
     // Hàm mở popup và load dữ liệu khi chỉnh sửa
     const handleEdit = (category: Category) => {
@@ -146,18 +148,18 @@ const CategoriesAdmin = () => {
                                 />
                             </label>
                             <label>
-    Giới tính:
-    <select
-        name="gendersID"
-        value={formData.gendersID || 1} // Đảm bảo giá trị là số
-        onChange={handleInputChange}
-        required
-    >
-        <option value={1}>Nam</option>
-        <option value={2}>Nữ</option>
-        <option value={3}>Khác</option>
-    </select>
-</label>
+                                Giới tính:
+                                <select
+                                    name="gendersID"
+                                    value={formData.gendersID || 1} // Đảm bảo giá trị là số
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value={1}>Nam</option>
+                                    <option value={2}>Nữ</option>
+                                    <option value={3}>Khác</option>
+                                </select>
+                            </label>
 
                             <div className="admin-Account-popup-buttons">
                                 <button type="submit" className="submit-button">

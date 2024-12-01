@@ -19,14 +19,24 @@ export interface Product {
     image: string;
 }
 
+export interface Category {
+    id: string;
+    categoriesID: number;
+    name: string;
+    gendersID: number;
+    createdAt: number;
+    updatedAt: number;
+}
+
 const MaleProduct: React.FC = () => {
     const [products, setProducts] = useState<Product[] | null>(null);
+    const [categories, setCategories] = useState<Category[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const productsPerPage = 8;
 
-    // Lấy danh sách tất cả sản phẩm ban đầu
+    // Fetch products (only male products, gendersID === 1)
     const fetchProducts = async () => {
         try {
             setLoading(true);
@@ -40,7 +50,21 @@ const MaleProduct: React.FC = () => {
         }
     };
 
-    // Lấy sản phẩm theo danh mục
+    // Fetch categories (only male categories, gendersID === 1)
+    const fetchCategories = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get<Category[]>('http://localhost:5000/categories');
+            const filteredCategories = response.data.filter(category => category.gendersID === 1);
+            setCategories(filteredCategories);
+        } catch (error) {
+            setError(error as Error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Fetch products by category
     const fetchProductsByCategory = async (categoriesID: number) => {
         try {
             setLoading(true);
@@ -49,7 +73,7 @@ const MaleProduct: React.FC = () => {
                 product => product.categoriesID === categoriesID && product.gendersID === 1
             );
             setProducts(filteredProducts);
-            setCurrentPage(1); // Reset trang về 1 khi lọc sản phẩm
+            setCurrentPage(1); // Reset the page when filtering products
         } catch (error) {
             setError(error as Error);
         } finally {
@@ -59,35 +83,46 @@ const MaleProduct: React.FC = () => {
 
     useEffect(() => {
         fetchProducts();
+        fetchCategories(); // Fetch categories
     }, []);
 
+    // Pagination logic
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = products ? products.slice(indexOfFirstProduct, indexOfLastProduct) : [];
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+    const handleCategoryClick = (event: React.MouseEvent<HTMLButtonElement>, categoryID: number) => {
+        event.preventDefault(); // Prevent page reload
+        fetchProductsByCategory(categoryID); // Filter products by category
+    };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
+
     return (
         <div>
-          
-            
             <div className="container-product">
                 <body>
                     <div className="nav">
                         <div className="header">
-                            NAM
-                            <button type="button" onClick={() => fetchProductsByCategory(1)}>SƠ MI</button>
-                            <button type="button" onClick={() => fetchProductsByCategory(3)}>ÁO VEST</button>
-                            <button type="button" onClick={() => fetchProductsByCategory(5)}>POLO</button>
-                            <button type="button" onClick={() => fetchProductsByCategory(7)}>ÁO NỈ</button>
+                             NAM 
+                            {/* Render category buttons */}
+                            {categories && categories.map((category) => (
+                                <button
+                                    key={category.id}
+                                    type="button"
+                                    onClick={(e) => handleCategoryClick(e, category.categoriesID)}
+                                >
+                                    {category.name}
+                                </button>
+                            ))}
                         </div>
                     </div>
                     <div className="product-grid">
                         {currentProducts && currentProducts.map((product) => (
                             <div className="product" key={product.id}>
-                                {/* Thêm Link để dẫn đến trang chi tiết sản phẩm */}
                                 <Link to={`/productdetail/${product.id}`}>
                                     <img alt={product.name} height="400" src={product.image} width="300" />
                                     <div className="product-title">{product.name}</div>
@@ -118,7 +153,6 @@ const MaleProduct: React.FC = () => {
                     </div>
                 </body>
             </div>
-            
         </div>
     );
 };
