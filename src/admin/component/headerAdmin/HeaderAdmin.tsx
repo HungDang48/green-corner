@@ -27,6 +27,9 @@ const HeaderAdmin = () => {
     const handleOrderAdminClick = () => {
         navigate('/OrderAdmin');
     };
+    const handleCategoriesAdminClick = () => {
+        navigate('/CategoriesAdmin');
+    };
     return (
         <div>
             
@@ -57,9 +60,7 @@ const HeaderAdmin = () => {
                                 <i ></i>ĐƠN HÀNG
                             </a>
                             <a href="#" onClick={handleProductAdminClick}>SẢN PHẨM</a>
-                            <a href="#">
-                                <i className="fas fa-bookmark"></i>DANH MỤC
-                            </a>
+                            <a href="#" onClick={handleCategoriesAdminClick}>DANH MỤC</a>
                         </div>
                     </div>
                     <div className="navbar-right">

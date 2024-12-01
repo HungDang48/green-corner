@@ -204,3 +204,47 @@ input[type="password"] {
     background-color: #dc3545;
     color: white;
 }
+/* Nút Update */
+.admin-Account-button-update-account {
+    background-color: #28a745; /* Màu xanh lá */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .admin-Account-button-update-account:hover {
+    background-color: #218838; /* Màu xanh lá đậm hơn khi hover */
+  }
+  
+  /* Nút Delete */
+  .admin-Account-button-delete-account {
+    background-color: #e74c3c; /* Màu đỏ */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .admin-Account-button-delete-account:hover {
+    background-color: #c0392b; /* Màu đỏ đậm hơn khi hover */
+  }
+  
+  /* Định dạng chung cho cả hai nút (nếu muốn đồng bộ kiểu dáng) */
+  .admin-Account-button-update-account,
+  .admin-Account-button-delete-account {
+    font-size: 14px;
+    margin-right: 5px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-Account-button-update-account:hover,
+  .admin-Account-button-delete-account:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  

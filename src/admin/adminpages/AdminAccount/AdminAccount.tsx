@@ -19,7 +19,9 @@ interface User {
 
 const AdminAccount = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isPopup1Open, setIsPopup1Open] = useState(false);
+  const [isPopup2Open, setIsPopup2Open] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     username: '',
@@ -109,10 +111,75 @@ const AdminAccount = () => {
       alert('Có lỗi xảy ra khi tạo tài khoản.');
     }
   };
+  // Function to delete a user
+  const handleDelete = async (userId: number) => {
+    const confirmDelete = window.confirm(
+      "Bạn có chắc chắn muốn xóa tài khoản này không?"
+    );
+    if (!confirmDelete) return;
 
+    try {
+      await axios.delete(`http://localhost:5000/Admins/${userId}`);
+      alert("Xóa tài khoản thành công!");
+      fetchUsers(); // Re-fetch users to update the list
+    } catch (error) {
+      console.error("Có lỗi xảy ra khi xóa tài khoản:", error);
+      alert("Có lỗi xảy ra khi xóa tài khoản.");
+    }
+  };
+
+  const handleUpdateClick = (user: User) => {
+    setSelectedUser(user);
+    setFormData({
+      fullName: user.name,
+      username: user.username,
+      email: user.email,
+      birthDate: user.birthday,
+      gender: user.gender,
+      password: '',
+      confirmPassword: '',
+    });
+    setIsPopup2Open(true);
+  };
+
+  // Function to handle updating the user
+  const handleUpdateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Ensure password confirmation matches if provided
+    if (formData.password && formData.password !== formData.confirmPassword) {
+      alert("Mật khẩu và xác nhận mật khẩu không khớp.");
+      return;
+    }
+
+    try {
+      // Update user details
+      await axios.put(`http://localhost:5000/Admins/${selectedUser?.id}`, {
+        ...selectedUser,
+        name: formData.fullName,
+        username: formData.username,
+        email: formData.email,
+        birthday: formData.birthDate,
+        gender: formData.gender,
+        password: formData.password || selectedUser?.password, // Keep the old password if not updated
+        updatedAt: Date.now(),
+      });
+
+      alert("Cập nhật tài khoản thành công!");
+      setIsPopup2Open(false);
+      fetchUsers(); // Re-fetch users after update
+      setSelectedUser(null); // Reset selected user
+    } catch (error) {
+      console.error("Có lỗi xảy ra khi cập nhật tài khoản:", error);
+      alert("Có lỗi xảy ra khi cập nhật tài khoản.");
+    }
+  };
   // Toggle the modal
   const togglePopup = () => {
     setIsPopup1Open(!isPopup1Open);
+  };
+  const togglePopup1 = () => {
+    setIsPopup2Open(!isPopup2Open);
   };
 
   return (
@@ -120,7 +187,7 @@ const AdminAccount = () => {
       <HeaderAdmin />
       <div className="admin-Account-container">
         <div className="admin-Account-container-top">
-           
+
           <h1>DANH SÁCH TÀI KHOẢN ADMIN</h1>
           <button className="admin-Account-button-new-account" onClick={togglePopup}>
             Tạo Tài Khoản Mới
@@ -201,8 +268,117 @@ const AdminAccount = () => {
                   <td>{user.birthday}</td>
                   <td>{user.gender}</td>
                   <td>
-                    <button>Update</button>
-                    <button>Xóa</button>
+                    <button
+                      className="admin-Account-button-update-account"
+                      onClick={() => handleUpdateClick(user)}
+                    >
+                      Update
+                    </button>
+                    <Modal
+                      open={isPopup2Open}
+                      onClose={() => setIsPopup2Open(false)}
+                      style={{
+                        padding: '20px',
+                        backgroundColor: '#f1f1f1',
+                        borderRadius: '10px',
+                        maxWidth: '500px',
+                        width: '100%',
+                      }}
+                    >
+                      <div className="admin-Account-popup-form-container">
+                        <h2>Cập Nhật Tài Khoản ADMIN</h2>
+                        <form className="admin-Account-account-form" onSubmit={handleUpdateSubmit}>
+                          <label>
+                            Họ và Tên:
+                            <input
+                              type="text"
+                              name="fullName"
+                              value={formData.fullName}
+                              onChange={handleInputChange}
+                              required
+                            />
+                          </label>
+                          <label>
+                            Username:
+                            <input
+                              type="text"
+                              name="username"
+                              value={formData.username}
+                              onChange={handleInputChange}
+                              required
+                            />
+                          </label>
+                          <label>
+                            Email:
+                            <input
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              required
+                            />
+                          </label>
+                          <label>
+                            Ngày Sinh:
+                            <input
+                              type="date"
+                              name="birthDate"
+                              value={formData.birthDate}
+                              onChange={handleInputChange}
+                              required
+                            />
+                          </label>
+                          <label>
+                            Giới Tính:
+                            <select
+                              name="gender"
+                              value={formData.gender}
+                              onChange={handleInputChange}
+                              required
+                            >
+                              <option value="male">Nam</option>
+                              <option value="female">Nữ</option>
+                              <option value="other">Khác</option>
+                            </select>
+                          </label>
+                          <label>
+                            Mật Khẩu (nếu muốn thay đổi):
+                            <input
+                              type="password"
+                              name="password"
+                              value={formData.password}
+                              onChange={handleInputChange}
+                            />
+                          </label>
+                          <label>
+                            Xác Nhận Mật Khẩu:
+                            <input
+                              type="password"
+                              name="confirmPassword"
+                              value={formData.confirmPassword}
+                              onChange={handleInputChange}
+                            />
+                          </label>
+                          <div className="admin-Account-popup-buttons">
+                            <button type="submit" className="submit-button">Lưu</button>
+                            <button
+                              type="button"
+                              className="cancel-button"
+                              onClick={() => setIsPopup2Open(false)}
+                            >
+                              Hủy
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </Modal>
+
+                    <button
+                      className="admin-Account-button-delete-account"
+                      onClick={() => handleDelete(user.id)}
+                    >
+                      Xóa
+                    </button>
                   </td>
                 </tr>
               ))}
