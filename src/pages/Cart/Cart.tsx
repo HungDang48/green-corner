@@ -3,6 +3,7 @@ import './Cart.css';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
+import RecommentProduct from '../../components/RecommentMale/RecommentProduct';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
@@ -175,6 +176,7 @@ const Cart = () => {
           </div>
         </div>
       </main>
+      <RecommentProduct />
       <Footer />
     </div>
   );

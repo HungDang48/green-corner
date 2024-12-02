@@ -31,7 +31,7 @@ const UniProduct: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const productsPerPage = 8;
+    const productsPerPage = 10;
 
     // Fetch products (only unisex products, gendersID === 3)
     const fetchProducts = async () => {
@@ -99,7 +99,7 @@ const UniProduct: React.FC = () => {
                 <body>
                     <div className="nav">
                         <div className="header">
-                            <h2>UNISEX</h2>
+                             UNISEX 
                             {/* Render category buttons dynamically */}
                             {categories && categories.map((category) => (
                                 <button

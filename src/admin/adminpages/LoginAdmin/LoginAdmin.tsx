@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './LoginAdmin.css';
@@ -8,6 +8,17 @@ const LoginAdmin = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); // Sử dụng useNavigate để điều hướng
+
+  useEffect(() => {
+    // Kiểm tra xem đã có admin trong localStorage và admin có AdminID không
+    const admin = localStorage.getItem('admin');
+    const adminData = admin ? JSON.parse(admin) : null;
+
+    if (adminData && adminData.AdminID) {
+      // Nếu đã đăng nhập và có AdminID, điều hướng ngay tới trang HomepageAdmin
+      navigate('/HomepageAdmin');
+    }
+  }, [navigate]);
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -26,6 +37,7 @@ const LoginAdmin = () => {
       if (matchedAdmin) {
         // Đăng nhập thành công
         localStorage.setItem('admin', JSON.stringify(matchedAdmin)); // Lưu thông tin admin vào localStorage
+        localStorage.setItem('AdminID', matchedAdmin.id); // Lưu ID admin vào localStorage
         alert(`Chào mừng ${matchedAdmin.name}!`);
         navigate('/HomepageAdmin'); // Điều hướng đến trang HomepageAdmin
       } else {

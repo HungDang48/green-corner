@@ -114,11 +114,18 @@ color: rgb(255, 0, 0);
             
 }
 .product img {
-    width: 300px;
-    height: auto;
-    object-fit: cover;
-    background-color: #e0e0e0;
+    width: 300px; /* Đặt chiều rộng cố định là 300px */
+    height: 300px; /* Đặt chiều cao cố định là 300px */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo và sẽ cắt phần dư thừa nếu cần */
+    border-radius: 8px; /* Bo góc ảnh để tạo hiệu ứng mềm mại */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng khi hover */
 }
+
+.product:hover img {
+    transform: scale(1.05); /* Phóng to ảnh khi hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Thêm hiệu ứng đổ bóng khi hover */
+}
+
 .product-title {
     margin-top: 10px;
     font-size: 14px;

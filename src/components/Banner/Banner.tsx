@@ -19,13 +19,22 @@ const Banner: React.FC<BannerProps> = ({ images = [img1, img2, img3], interval =
     return () => clearInterval(intervalId);
   }, [images, interval]);
 
-  if (images.length === 0 ){
-    return <div>No image</div>
+  if (images.length === 0) {
+    return <div>No image</div>;
   }
 
   return (
-    <div>
-      <img src={images[currentImageIndex]} alt="banner" style={{ width: '100%' }} />
+    <div style={{ width: '100%', height: '900px', overflow: 'hidden' }}> 
+      {/* Container with fixed height */}
+      <img
+        src={images[currentImageIndex]}
+        alt="banner"
+        style={{ 
+          width: '100%', 
+          height: '100%', 
+          objectFit: 'cover', // Ensures images are properly stretched and cropped to fit
+        }}
+      />
     </div>
   );
 };

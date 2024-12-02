@@ -109,11 +109,11 @@ const Header = () => {
           </div>
           <div className="menu">
             <a href="#" onClick={handleHomePageClick}>TRANG CHỦ</a>
-            <a href="#" onClick={handleMaleClick}>NAM</a>
-            <a href="#" onClick={handleFemaleClick}>NỮ</a>
+            {/* <a href="#" onClick={handleMaleClick}>NAM</a>
+            <a href="#" onClick={handleFemaleClick}>NỮ</a> */}
           </div>
           <div className="search">
-            <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+            {/* <input type="text" placeholder="Tìm kiếm sản phẩm..." /> */}
             <div className="search-icons">
               {isLoggedIn ? (
                 <>
@@ -127,7 +127,7 @@ const Header = () => {
                   <span className="icon user-icon">👤
                     <div className="user-menu">
                       <a href="#" onClick={handleUserAccountClick}>thông tin cá nhân</a>
-                      <a href="#" onClick={handleOrderStatusClick}>Đơn Hàng</a>
+                      {/* <a href="#" onClick={handleOrderStatusClick}>Đơn Hàng</a> */}
                       <a href="#" onClick={handleLogoutClick}>Đăng xuất</a>
                     </div>
                   </span>

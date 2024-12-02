@@ -34,7 +34,7 @@ const FemaleProduct: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const productsPerPage = 8;
+  const productsPerPage = 10;
 
   // Lấy danh sách sản phẩm có gendersID = 2
   const fetchProducts = async () => {

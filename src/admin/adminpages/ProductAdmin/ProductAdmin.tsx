@@ -49,7 +49,7 @@ interface FormData {
 const ProductAdmin = () => {
 
     const [loading, setLoading] = useState<boolean>(true);
-    const [imageUrl, setImageUrl] = useState<string>('');
+    const [imageUrl, setImageUrl] = useState(''); // Khởi tạo state
 
 
     const [productsList, setProductsList] = useState<Product[] | null>(null);
@@ -173,6 +173,7 @@ const ProductAdmin = () => {
             ...prev,
             [name]: name === 'gendersID' ? Number(value) : value, // Chuyển gendersID thành number
             [name]: name === 'newSaleID' || name === 'hotSaleID' ? value === 'true' : value, // Chuyển đổi BooleanhandleSubmitUpdate
+
         }));
     };
 
@@ -362,10 +363,9 @@ const ProductAdmin = () => {
                             <form className="product-form">
                                 <label htmlFor="imageUrl">Liên kết hình ảnh:</label>
                                 <input
-                                    type="url"
-                                    id="imageUrl"
+                                    type="text"
                                     name="imageUrl"
-                                    value={imageUrl}
+                                    value={imageUrl}  // Kiểm tra xem `imageUrl` có được khởi tạo và cập nhật đúng không
                                     onChange={handleInputChange}
                                     placeholder="Nhập URL hình ảnh..."
                                     required

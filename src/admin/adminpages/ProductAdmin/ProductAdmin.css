@@ -21,7 +21,12 @@
     color: #333;
     font-weight: bold;
 }
-
+input {
+    color: black;  /* Đảm bảo màu chữ không bị ẩn */
+    padding: 10px; /* Đảm bảo đủ không gian cho nội dung */
+    font-size: 16px; /* Đảm bảo chữ đủ lớn để nhìn thấy */
+    background-color: #f9f9f9; /* Đặt nền sáng */
+  }
 /* Nút "Thêm sản phẩm mới" */
 .product-admin-button-new-product {
     background-color: #4CAF50; /* Màu xanh lá cây */

@@ -22,6 +22,7 @@ import OrderAdmin from '../admin/adminpages/Order/OrderAdmin';
 import OrderStatus from '../pages/OrderStatus/OrderStatus';
 import AdminAccount from '../admin/adminpages/AdminAccount/AdminAccount';
 import CategoriesAdmin from '../admin/adminpages/CategoriesAdmin/CategoriesAdmin';
+import RecommentProduct from '../components/RecommentMale/RecommentProduct';
 
 const RouterPages = () => {
   return (
@@ -51,6 +52,7 @@ const RouterPages = () => {
       <Route path="/OrderStatus" element={<OrderStatus />} />
       <Route path="/AdminAccount" element={<AdminAccount />} />
       <Route path="/CategoriesAdmin" element={<CategoriesAdmin />} />
+      <Route path="/RecommentProduct" element={<RecommentProduct />} />
    
 
     </Routes>

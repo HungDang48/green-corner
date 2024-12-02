@@ -6,7 +6,7 @@ import Modal from '../../component/modal';
 
 interface User {
   id: number;
-  UserID: number;
+  AdminID: number;
   name: string;
   username: string;
   email: string;
@@ -76,13 +76,13 @@ const AdminAccount = () => {
         return;
       }
 
-      const newUserID = userList.length > 0 ? userList[userList.length - 1].UserID + 1 : 1;
+      const newAdminID = userList.length > 0 ? userList[userList.length - 1].AdminID + 1 : 1;
       const newid = userList.length > 0 ? userList[userList.length - 1].id + 1 : 1;
 
       // Create new user
       await axios.post('http://localhost:5000/Admins', {
         id: newid,
-        UserID: newUserID,
+        AdminID: newAdminID,
         name: formData.fullName,
         username: formData.username,
         email: formData.email,
@@ -112,14 +112,14 @@ const AdminAccount = () => {
     }
   };
   // Function to delete a user
-  const handleDelete = async (userId: number) => {
+  const handleDelete = async (AdminId: number) => {
     const confirmDelete = window.confirm(
       "Bạn có chắc chắn muốn xóa tài khoản này không?"
     );
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/Admins/${userId}`);
+      await axios.delete(`http://localhost:5000/Admins/${AdminId}`);
       alert("Xóa tài khoản thành công!");
       fetchUsers(); // Re-fetch users to update the list
     } catch (error) {

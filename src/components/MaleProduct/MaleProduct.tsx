@@ -34,7 +34,7 @@ const MaleProduct: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const productsPerPage = 8;
+    const productsPerPage = 10;
 
     // Fetch products (only male products, gendersID === 1)
     const fetchProducts = async () => {
