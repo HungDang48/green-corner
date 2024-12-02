@@ -26,8 +26,10 @@ export interface Category {
 }
 
 const UniProduct: React.FC = () => {
-    const [products, setProducts] = useState<Product[] | null>(null);
+    const [products, setProducts] = useState<Product[]>([]); // Lưu tất cả sản phẩm
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Lưu sản phẩm sau khi lọc
     const [categories, setCategories] = useState<Category[] | null>(null);
+    const [searchTerm, setSearchTerm] = useState(''); // Từ khóa tìm kiếm
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -40,6 +42,7 @@ const UniProduct: React.FC = () => {
             const response = await axios.get<Product[]>('http://localhost:5000/products');
             const filteredProducts = response.data.filter(product => product.gendersID === 3);
             setProducts(filteredProducts);
+            setFilteredProducts(filteredProducts); // Ban đầu hiển thị tất cả sản phẩm
         } catch (error) {
             setError(error as Error);
         } finally {
@@ -61,32 +64,32 @@ const UniProduct: React.FC = () => {
         }
     };
 
-    // Fetch products by category
-    const fetchProductsByCategory = async (categoriesID: number) => {
-        try {
-            setLoading(true);
-            const response = await axios.get<Product[]>('http://localhost:5000/products');
-            const filteredProducts = response.data.filter(
-                product => product.categoriesID === categoriesID && product.gendersID === 3
+    // Search function
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const keyword = e.target.value.toLowerCase(); // Chuyển từ khóa về chữ thường
+        setSearchTerm(keyword); // Lưu từ khóa tìm kiếm
+        if (!keyword) {
+            setFilteredProducts(products); // Nếu không có từ khóa, hiển thị tất cả sản phẩm
+        } else {
+            const results = products.filter(product =>
+                product.name.toLowerCase().includes(keyword)
             );
-            setProducts(filteredProducts);
-            setCurrentPage(1); // Reset to first page after filtering
-        } catch (error) {
-            setError(error as Error);
-        } finally {
-            setLoading(false);
+            setFilteredProducts(results);
         }
+        setCurrentPage(1); // Reset về trang đầu tiên
     };
 
+    // Fetch products and categories on component mount
     useEffect(() => {
         fetchProducts();
-        fetchCategories(); // Fetch categories when component mounts
+        fetchCategories();
     }, []);
 
     // Pagination logic
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = products ? products.slice(indexOfFirstProduct, indexOfLastProduct) : [];
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -99,13 +102,22 @@ const UniProduct: React.FC = () => {
                 <body>
                     <div className="nav">
                         <div className="header">
-                             UNISEX 
+                            UNISEX
+                            {/* Search Bar */}
+                            <div className="search-bar">
+                                <input
+                                    placeholder="Type to search..."
+                                    type="text"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
                             {/* Render category buttons dynamically */}
                             {categories && categories.map((category) => (
                                 <button
                                     key={category.id}
                                     type="button"
-                                    onClick={() => fetchProductsByCategory(category.categoriesID)}
+                                    onClick={() => setFilteredProducts(products.filter(product => product.categoriesID === category.categoriesID))}
                                 >
                                     {category.name}
                                 </button>
@@ -113,7 +125,7 @@ const UniProduct: React.FC = () => {
                         </div>
                     </div>
                     <div className="product-grid">
-                        {currentProducts && currentProducts.map((product) => (
+                        {currentProducts.map((product) => (
                             <div className="product" key={product.id}>
                                 <Link to={`/productdetail/${product.id}`}>
                                     <img alt={product.name} height="400" src={product.image} width="300" />
@@ -138,7 +150,7 @@ const UniProduct: React.FC = () => {
                         <button
                             className="BTN-pagination"
                             onClick={() => paginate(currentPage + 1)}
-                            disabled={!products || currentPage === Math.ceil((products.length || 0) / productsPerPage)}
+                            disabled={currentPage === totalPages}
                         >
                             Next
                         </button>

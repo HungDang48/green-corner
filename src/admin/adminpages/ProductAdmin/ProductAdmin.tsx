@@ -50,8 +50,8 @@ const ProductAdmin = () => {
 
     const [loading, setLoading] = useState<boolean>(true);
     const [imageUrl, setImageUrl] = useState(''); // Khởi tạo state
-
-
+    const [searchTerm, setSearchTerm] = useState(''); // Từ khóa tìm kiếm
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [productsList, setProductsList] = useState<Product[] | null>(null);
     const [categoriesList, setCategoriesList] = useState<Category[] | null>(null);
     const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
@@ -85,7 +85,19 @@ const ProductAdmin = () => {
         updatedAt: Date.now(), // Initial value for updatedAt
     });
 
-
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const keyword = e.target.value.toLowerCase(); // Chuyển từ khóa về chữ thường
+        setSearchTerm(keyword); // Lưu từ khóa tìm kiếm
+        if (!keyword) {
+            setFilteredProducts(products); // Nếu không có từ khóa, hiển thị tất cả sản phẩm
+        } else {
+            const results = products.filter(product =>
+                product.name.toLowerCase().includes(keyword)
+            );
+            setFilteredProducts(results);
+        }
+        setCurrentPage(1); // Reset về trang đầu tiên
+    };
 
 
 
@@ -312,6 +324,7 @@ const ProductAdmin = () => {
                 setProductsList(response.data);
                 const categoriesResponse = await axios.get<Category[]>('http://localhost:5000/Categories');
                 setCategoriesList(categoriesResponse.data);
+                setFilteredProducts(filteredProducts);
             } catch (error) {
                 console.error('Error fetching products:', error);
             } finally {
@@ -325,7 +338,6 @@ const ProductAdmin = () => {
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = productsList?.slice(indexOfFirstProduct, indexOfLastProduct);
     const totalPages = productsList ? Math.ceil(productsList.length / productsPerPage) : 0;
-
     const getCategoryName = (categoriesID: number): string => {
         const category = categoriesList?.find((cat) => cat.categoriesID === categoriesID);
         return category ? category.name : 'Không xác định';
@@ -344,6 +356,14 @@ const ProductAdmin = () => {
                 {/* Header */}
                 <div className="product-admin-container-top">
                     <h1>DANH SÁCH SẢN PHẨM</h1>
+                    <div className="search-bar">
+                                <input
+                                    placeholder="Type to search..."
+                                    type="text"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
                     <button className="product-admin-button-new-product" onClick={togglePopup}>
                         Thêm sản phẩm mới
                     </button>

@@ -314,7 +314,7 @@ const UserAccount: React.FC = () => {
                                 <th>Email</th>
                                 <th>Birthday</th>
                                 <th>Gender</th>
-                                <th>PassWord</th>
+                                
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -327,7 +327,7 @@ const UserAccount: React.FC = () => {
                                     <td>{user.email}</td>
                                     <td>{user.birthday}</td>
                                     <td>{user.gender}</td>
-                                    <td>{user.password}</td>
+                                    
                                     <td>
                                         <button className="user-account-button-new-account" onClick={() => onUpdate(user.id)} >
                                             UPDATE
@@ -371,14 +371,14 @@ const UserAccount: React.FC = () => {
                                                             <option value="other">Khác</option>
                                                         </select>
                                                     </label>
-                                                    <label>
+                                                    {/* <label>
                                                         Mật Khẩu:
                                                         <input type="text" name="password" value={formData.password} onChange={handleInputChangeUpdate} required />
                                                     </label>
                                                     <label>
                                                         Xác Nhận Mật Khẩu:
                                                         <input type="text" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChangeUpdate} required />
-                                                    </label>
+                                                    </label> */}
                                                     <div className="popup-buttons">
                                                         <button type="submit" className="submit-button">Cập nhật</button>
                                                         <button type="button" className="cancel-button" onClick={onCancel}>Hủy</button>

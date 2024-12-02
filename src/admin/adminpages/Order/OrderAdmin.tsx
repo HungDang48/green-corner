@@ -22,7 +22,7 @@ export interface Order {
   id: number;
   OrderID: number;
   orderStatus: string;
-  paymentStatus: string;  // Thêm paymentStatus vào interface
+  paymentStatus: string;
   orderDate: string;
   paymentMethod: string;
   UserID: number;
@@ -40,25 +40,24 @@ const OrderAdmin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [newStatus, setNewStatus] = useState("");
-  const [newPaymentStatus, setNewPaymentStatus] = useState(""); // Thêm state cho paymentStatus
-  const itemsPerPage = 5;
+  const [newPaymentStatus, setNewPaymentStatus] = useState(""); // Trạng thái thanh toán
   const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
-  const [orderID, setOrderID] = useState<number | null>(null);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+
+  const itemsPerPage = 5;
 
   useEffect(() => {
     fetch("http://localhost:5000/Orders")
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch orders");
-        }
+        if (!response.ok) throw new Error("Failed to fetch orders");
         return response.json();
       })
       .then((data) => {
         setOrders(data);
         setLoading(false);
       })
-      .catch((error) => {
-        setError(error.message);
+      .catch((err) => {
+        setError(err.message);
         setLoading(false);
       });
   }, []);
@@ -68,56 +67,36 @@ const OrderAdmin = () => {
   const currentOrders = orders.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(orders.length / itemsPerPage);
 
-  const handlePrevPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  const handlePrevPage = () => currentPage > 1 && setCurrentPage(currentPage - 1);
+  const handleNextPage = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
+
+  const toggleProductModal = (order: Order) => {
+    setSelectedOrder(order);
+    setIsProductModalOpen(!isProductModalOpen);
   };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
-
-  const onUpdate = (orderID: number) => {
-    setOrderID(orderID);
-    togglePopup1();
-  };
-
-  const onCancel = () => {
-    setOrderID(null);
-    togglePopup1();
-  };
-
-  const handleStatusChange = (order: Order) => {
+  const toggleEditModal = (order: Order) => {
     setSelectedOrder(order);
     setNewStatus(order.orderStatus);
-    setNewPaymentStatus(order.paymentStatus); // Đặt trạng thái thanh toán từ order
-    togglePopup1();
-  };
-
-  const togglePopup1 = () => {
-    setIsEditPopupOpen(!isEditPopupOpen);
+    setNewPaymentStatus(order.paymentStatus);
+    setIsEditPopupOpen(true);
   };
 
   const handleUpdateStatus = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedOrder) return;
 
-    setLoading(true);
-
     fetch(`http://localhost:5000/Orders/${selectedOrder.id}`, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         orderStatus: newStatus,
-        paymentStatus: newPaymentStatus, // Cập nhật trạng thái thanh toán
+        paymentStatus: newPaymentStatus,
       }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Cập nhật trạng thái thất bại.");
-        }
-        return response.json();
+      .then((res) => {
+        if (!res.ok) throw new Error("Cập nhật trạng thái thất bại.");
+        return res.json();
       })
       .then((updatedOrder) => {
         setOrders((prevOrders) =>
@@ -127,24 +106,14 @@ const OrderAdmin = () => {
               : order
           )
         );
+        setIsEditPopupOpen(false);
         setSelectedOrder(null);
-        togglePopup1();
       })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch((err) => setError(err.message));
   };
 
-  if (loading) {
-    return <p>Đang tải dữ liệu...</p>;
-  }
-
-  if (error) {
-    return <p>Lỗi: {error}</p>;
-  }
+  if (loading) return <p>Đang tải dữ liệu...</p>;
+  if (error) return <p>Lỗi: {error}</p>;
 
   return (
     <div>
@@ -160,7 +129,6 @@ const OrderAdmin = () => {
               <th>Ngày Đặt</th>
               <th>Phương Thức Thanh Toán</th>
               <th>Trạng Thái Thanh Toán</th>
-              <th>Sản Phẩm</th>
               <th>Phí Vận Chuyển</th>
               <th>Tên Khách Hàng</th>
               <th>Số Điện Thoại</th>
@@ -179,41 +147,17 @@ const OrderAdmin = () => {
                 <td>{new Date(order.orderDate).toLocaleString()}</td>
                 <td>{order.paymentMethod}</td>
                 <td>{order.paymentStatus}</td>
-                <td>
-                  <table className="product-table">
-                    <thead>
-                      <tr>
-                        <th>Tên</th>
-                        <th>Số Lượng</th>
-                        <th>Giá</th>
-                        <th>Size</th>
-                        <th>Màu</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {order.products.map((product, idx) => (
-                        <tr key={idx}>
-                          <td>{product.name}</td>
-                          <td>{product.quantity}</td>
-                          <td>{product.price ? product.price.toLocaleString() + " VND" : "N/A"}</td>
-                          <td>{product.size}</td>
-                          <td>{product.color}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </td>
-                <td>{order.shippingFee ? order.shippingFee.toLocaleString() + " VND" : "N/A"}</td>
+                <td>{order.shippingFee.toLocaleString()} VND</td>
                 <td>{order.shippingInfors.GuestName}</td>
                 <td>{order.shippingInfors.GuestNumber}</td>
                 <td>{order.shippingInfors.Address}</td>
                 <td>{order.courier}</td>
-                <td>{order.totalAmount ? order.totalAmount.toLocaleString() + " VND" : "N/A"}</td>
+                <td>{order.totalAmount.toLocaleString()} VND</td>
                 <td>
-                  <button
-                    className="user-account-button-new-account"
-                    onClick={() => handleStatusChange(order)}
-                  >
+                  <button className="action-detail-button" onClick={() => toggleProductModal(order)}>
+                    Xem sản phẩm
+                  </button>
+                  <button className="action-button" onClick={() => toggleEditModal(order)}>
                     Cập nhật trạng thái
                   </button>
                 </td>
@@ -232,18 +176,14 @@ const OrderAdmin = () => {
           </button>
         </div>
 
-        {/* Modal Popup for status update */}
+        {/* Modal Cập Nhật Trạng Thái */}
         {isEditPopupOpen && selectedOrder && (
-          <Modal open={isEditPopupOpen} onClose={togglePopup1}>
-            <h3>Cập nhật trạng thái đơn hàng và thanh toán</h3>
+          <Modal open={isEditPopupOpen} onClose={() => setIsEditPopupOpen(false)}>
+            <h3>Cập nhật trạng thái đơn hàng</h3>
             <form onSubmit={handleUpdateStatus}>
               <div>
                 <label htmlFor="status">Trạng thái đơn hàng</label>
-                <select
-                  id="status"
-                  value={newStatus}
-                  onChange={(e) => setNewStatus(e.target.value)}
-                >
+                <select id="status" value={newStatus} onChange={(e) => setNewStatus(e.target.value)}>
                   <option value="Pending">Pending</option>
                   <option value="Shipped">Shipped</option>
                   <option value="Delivered">Delivered</option>
@@ -262,11 +202,37 @@ const OrderAdmin = () => {
                   <option value="Refunded">Refunded</option>
                 </select>
               </div>
-              <div className="button-modal">
-                <br />
-                <button className="button-submit" type="submit">Cập nhật</button>
-              </div>
+              <button type="submit" className="button-submit">Cập nhật</button>
             </form>
+          </Modal>
+        )}
+
+        {/* Modal Hiển Thị Sản Phẩm */}
+        {isProductModalOpen && selectedOrder && (
+          <Modal open={isProductModalOpen} onClose={() => setIsProductModalOpen(false)}>
+            <h3>Danh sách sản phẩm</h3>
+            <table className="product-table">
+              <thead>
+                <tr>
+                  <th>Tên</th>
+                  <th>Số Lượng</th>
+                  <th>Giá</th>
+                  <th>Size</th>
+                  <th>Màu</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedOrder.products.map((product, idx) => (
+                  <tr key={idx}>
+                    <td>{product.name}</td>
+                    <td>{product.quantity}</td>
+                    <td>{product.price.toLocaleString()} VND</td>
+                    <td>{product.size}</td>
+                    <td>{product.color}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </Modal>
         )}
       </div>
