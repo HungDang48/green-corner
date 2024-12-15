@@ -16,6 +16,7 @@ import UserAccount from '../pages/UserAccount/UserAccount';
  
  
 import AdminAccount from '../admin/adminpages/AdminAccount/AdminAccount';
+import EditUserAccount from '../pages/editUserAccount/EditUserAccount';
  
  
 const RouterPages = () => {
@@ -32,6 +33,7 @@ const RouterPages = () => {
       <Route path="/useraccount" element={<UserAccount />} />
      
       <Route path="/AdminAccount" element={<AdminAccount />} />
+      <Route path="/EditUserAccount" element={<EditUserAccount />} />
        
       
    

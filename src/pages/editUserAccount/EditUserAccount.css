@@ -1,0 +1,150 @@
+/* Tổng quan của container */
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Định dạng cho các phần tử có lớp .form-group */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Định dạng các input và textarea */
+  input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /* Định dạng các input radio và checkbox */
+  input[type="radio"], input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  /* Định dạng cho các thẻ label */
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  /* Định dạng cho các thẻ img của ảnh đại diện */
+  .profile-pic img {
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+  
+  /* Định dạng cho các icon trong input */
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-wrapper i {
+    margin-left: 10px;
+    color: #00aaff;
+    cursor: pointer;
+  }
+  
+  /* Định dạng các phần lựa chọn giới tính */
+  .gender input[type="radio"] {
+    margin-right: 10px;
+  }
+  
+  /* Định dạng cho các phần lựa chọn ngày tháng năm */
+  .dob-select select {
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Định dạng cho các button */
+  button {
+    padding: 10px 20px;
+    background-color: #00aaff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0088cc;
+  }
+  
+  /* Định dạng cho các button hủy và lưu */
+  .cancel-btn {
+    background-color: #f44336;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #d32f2f;
+  }
+  
+  .save-btn {
+    background-color: #4caf50;
+  }
+  
+  .save-btn:hover {
+    background-color: #388e3c;
+  }
+  
+  /* Định dạng cho các button kết nối mạng xã hội */
+  .connect-btn, .add-btn {
+    background-color: #3b5998;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .connect-btn:hover, .add-btn:hover {
+    background-color: #2d4373;
+  }
+  
+  /* Định dạng cho phần toggle */
+  .toggle {
+    display: flex;
+    align-items: center;
+  }
+  
+  .toggle input[type="checkbox"] {
+    margin-left: 10px;
+  }
+  
+  /* Định dạng cho các thẻ .gender */
+  .gender {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .gender label {
+    margin-right: 20px;
+  }
+  
+  /* Định dạng cho phần textarea */
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /* Định dạng cho phần .add-social */
+  .add-social {
+    text-align: center;
+    margin-top: 20px;
+  }
+  

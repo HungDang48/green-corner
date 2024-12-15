@@ -115,13 +115,6 @@ const Header = () => {
             <div className="search-icons-header">
               {isLoggedIn ? (
                 <>
-                  <span className="icon cart-icon-header" onClick={handleCartClick}>
-                    🛒
-                    {/* Hiển thị số lượng sản phẩm trong giỏ hàng */}
-                    {cartItemCount > 0 && (
-                      <span className="cart-count-header">{cartItemCount}</span>
-                    )}
-                  </span>
                   <span className="icon user-icon-header">👤
                     <div className="user-menu-header">
                       <a href="#" onClick={handleUserAccountClick}>thông tin cá nhân</a>
