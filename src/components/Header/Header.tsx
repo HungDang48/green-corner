@@ -53,7 +53,7 @@ const Header = () => {
       navigate('/LoginAdmin');
     }
   };
-  
+
   const handleMaleClick = () => {
     navigate('/MaleProduct');
   };
@@ -74,10 +74,10 @@ const Header = () => {
     // Xóa thông tin tài khoản khỏi localStorage
     localStorage.removeItem('user'); // Xóa thông tin người dùng
     localStorage.removeItem('isLoggedIn'); // Xóa trạng thái đăng nhập
-    
+
     // Cập nhật lại trạng thái đăng nhập trong ứng dụng
     setIsLoggedIn(false); // Cập nhật lại trạng thái đăng nhập
-  
+
     // Điều hướng người dùng về trang chủ
     navigate('/Homepage');
   };
@@ -89,43 +89,41 @@ const Header = () => {
 
   return (
     <div>
-      <div className="container-header">
-        <div className="top-bar">
-          <div>
-            <a href="#">84RISING*</a>
-            <a href="#">COOLXPRINT</a>
-          </div>
-          <div>
-          <a href="#" onClick={handleHomeAdminClick}>TRANG ADMIN</a>
 
-            <a href="#">Blog</a>
-            <a href="#">Về Shopping Well</a>
-            <a href="#">Trung tâm CSKH</a>
-          </div>
+      <div className="container-header">
+        <div className="left-header">
+          <div className="logo-header">Green<span>Corner</span></div>
         </div>
-        <div className="main-nav">
-          <div className="logo" onClick={handleHomePageClick}>
-            Shopping<br />Well
-          </div>
-          <div className="menu">
-            <a href="#" onClick={handleHomePageClick}>TRANG CHỦ</a>
-            {/* <a href="#" onClick={handleMaleClick}>NAM</a>
-            <a href="#" onClick={handleFemaleClick}>NỮ</a> */}
-          </div>
-          <div className="search">
+        <div className="mid-header">
+          <body>
+            <div className="navbar-header">
+
+              <div className="nav-links-header">
+                <a href="#" onClick={handleHomePageClick}>TRANG CHỦ</a>
+                <a href="#">About Us</a>
+                <a href="#">Portfolio</a>
+                <a href="#">Contact Us</a>
+              </div>
+
+            </div>
+          </body>
+
+        </div>
+        <div className="right-header">
+          <div className="search-header">
             {/* <input type="text" placeholder="Tìm kiếm sản phẩm..." /> */}
-            <div className="search-icons">
+            <div className="search-icons-header">
               {isLoggedIn ? (
                 <>
-                  <span className="icon cart-icon" onClick={handleCartClick}>
-                  🛒
+                  <span className="icon cart-icon-header" onClick={handleCartClick}>
+                    🛒
                     {/* Hiển thị số lượng sản phẩm trong giỏ hàng */}
                     {cartItemCount > 0 && (
-                      <span className="cart-count">{cartItemCount}</span>
+                      <span className="cart-count-header">{cartItemCount}</span>
                     )}
                   </span>
-                  <span className="icon user-icon">👤
-                    <div className="user-menu">
+                  <span className="icon user-icon-header">👤
+                    <div className="user-menu-header">
                       <a href="#" onClick={handleUserAccountClick}>thông tin cá nhân</a>
                       {/* <a href="#" onClick={handleOrderStatusClick}>Đơn Hàng</a> */}
                       <a href="#" onClick={handleLogoutClick}>Đăng xuất</a>
@@ -133,16 +131,23 @@ const Header = () => {
                   </span>
                 </>
               ) : (
-                <div className="auth-links">
+                <div className="auth-links-header">
                   <a href="#" onClick={handleLoginClick}>Đăng nhập</a>
                   <a href="#" onClick={handleRegisterClick}>Đăng kí</a>
                 </div>
               )}
             </div>
           </div>
+          <a href="#" onClick={handleHomeAdminClick}>TRANG ADMIN</a>
+
+
         </div>
+
+
       </div>
+
     </div>
+
   );
 };
 
